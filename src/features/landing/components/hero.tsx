@@ -17,6 +17,7 @@ export function Hero() {
 				src={handshakeImage}
 				height={460}
 				className="aspect-video h-full w-full object-cover"
+				alt="Dos personas estrechándose las manos"
 			/>
 		</section>
 	);
