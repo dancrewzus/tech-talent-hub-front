@@ -19,6 +19,8 @@ const links: Array<{
 ];
 
 export function Footer() {
+	const currentYear = new Date().getFullYear();
+
 	return (
 		<footer className="w-full bg-card-foreground/5 py-6">
 			<div className="container flex h-full flex-col justify-between gap-6 lg:flex-row lg:items-center">
@@ -30,7 +32,7 @@ export function Footer() {
 					))}
 				</ul>
 
-				<p>©2024 Tech Talent Hub · Todos los derechos reservados.</p>
+				<p>©{currentYear} Tech Talent Hub · Todos los derechos reservados.</p>
 			</div>
 		</footer>
 	);
