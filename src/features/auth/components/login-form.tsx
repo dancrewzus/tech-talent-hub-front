@@ -43,7 +43,7 @@ export function LoginForm() {
 				</div>
 			</div>
 
-			<Button className="w-full">Registrarse</Button>
+			<Button className="w-full">Iniciar Sesión</Button>
 		</form>
 	);
 }
