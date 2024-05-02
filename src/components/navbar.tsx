@@ -5,7 +5,7 @@ export function NavBar() {
 	return (
 		<nav className="w-full bg-card-foreground/5 py-4">
 			<div className="container flex items-center justify-between">
-				<p>TechTalentHub</p>
+				<p className="font-medium">Tech Talent Hub</p>
 
 				<div className="block md:hidden">
 					<Drawer>
