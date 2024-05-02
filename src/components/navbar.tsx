@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { Drawer, DrawerItem } from "./drawer";
 import { Button } from "./ui/button";
 
@@ -12,7 +14,7 @@ export function NavBar() {
 				<div className="block md:hidden">
 					<Drawer>
 						<div className="flex flex-col gap-4">
-							<DrawerItem title="Iniciar Sesión" to="/sign-in" />
+							<DrawerItem title="Iniciar Sesión" to="/login" />
 
 							<DrawerItem title="Registrarse" to="/sign-up" />
 						</div>
@@ -20,9 +22,13 @@ export function NavBar() {
 				</div>
 
 				<div className="hidden space-x-2 md:block">
-					<Button variant="outline">Iniciar Sesión</Button>
+					<Button variant="outline" asChild>
+						<Link to="/login">Iniciar Sesión</Link>
+					</Button>
 
-					<Button>Registrarse</Button>
+					<Button asChild>
+						<Link to="/sign-up">Registrarse</Link>
+					</Button>
 				</div>
 			</div>
 		</nav>
