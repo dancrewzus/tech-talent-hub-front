@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 export function NavBar() {
 	return (
-		<nav className="w-full bg-card-foreground/5 py-4">
+		<nav className="w-full">
 			<div className="container flex items-center justify-between">
 				<a href="/">
 					<p className="font-medium">Tech Talent Hub</p>
@@ -13,16 +13,14 @@ export function NavBar() {
 
 				<div className="block md:hidden">
 					<Drawer>
-						<div className="flex flex-col gap-4">
-							<DrawerItem title="Iniciar Sesión" to="/login" />
+						<DrawerItem title="Iniciar Sesión" to="/login" />
 
-							<DrawerItem title="Registrarse" to="/sign-up" />
-						</div>
+						<DrawerItem title="Registrarse" to="/sign-up" />
 					</Drawer>
 				</div>
 
 				<div className="hidden space-x-2 md:block">
-					<Button variant="outline" asChild>
+					<Button variant="ghost" asChild>
 						<Link to="/login">Iniciar Sesión</Link>
 					</Button>
 
