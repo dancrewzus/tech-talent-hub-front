@@ -10,7 +10,7 @@
 
 ## TOC
 
-- [What is Tech Talent Hub?](#what-is)
+- [What is Tech Talent Hub?](#what-is-tech-talent-hub)
 - [Requirements](#requirements)
 - [Technologies](#technologies)
 - [Project Structure](#project-structure)
@@ -19,22 +19,17 @@
 - [Contributing](#contributing)
   - [Branch Convention](#branch-convention)
   - [Commits Convention](#commits-convention)
-
-<a href="what-is"></a>
+- [License](#license)
 
 ## What is Tech Talent Hub?
 
 TechTalentHub is designed to streamline the recruitment of IT professionals, providing a robust platform for both companies seeking specialized IT talent and IT professionals looking for employment opportunities. This web facilitates user registration, profile creation, job searches with advanced filtering, and direct job application functionalities. Ideal for enhancing the hiring process, TechTalentHub ensures a smooth, efficient interaction for all users in the tech industry.
-
-<a href="requirements"></a>
 
 ## Requirements
 
 - [Git](https://git-scm.com/downloads)
 - [Node](https://nodejs.org/en/download)
 - [pnpm](https://pnpm.io/es/installation) - This is recommended, but you can use any package manager like npm or [yarn](https://yarnpkg.com/)
-
-<a href="technologies"></a>
 
 ## Technologies
 
@@ -43,8 +38,6 @@ TechTalentHub is designed to streamline the recruitment of IT professionals, pro
 - [React](https://es.react.dev/) - UI library
 - [Tailwind CSS](https://tailwindcss.com/) - The CSS Framework
 - [shadcn/ui](https://ui.shadcn.com/) - Component library
-
-<a href="project-structure"></a>
 
 ## Project Structure
 
@@ -77,15 +70,13 @@ The `components` folder contains the different UI shared components of the appli
 
 The `hooks` folder contains the different hooks of the application.
 
-The `features` folder contains the different features of the application. Every feature can have its `pages`,`hooks` and `components.
+The `features` folder contains the different features of the application. Every feature can have its `pages`,`hooks` and `components`.
 
 The `lib` folder contains functions or constants that may be used in different parts of the application.
 
 The `index.css` containts the Tailwind CSS base and shadcn/ui styling.
 
 The `main.tsx` is the entry point.
-
-<a href="installation"></a>
 
 ## Installation
 
@@ -119,14 +110,10 @@ $ cd your-folder-name
 pnpm install
 ```
 
-<a href="start"></a>
-
 ## Start the Application
 
 1. Create an `.env.development` and `.env.production` based on the `.env.example`.
 2. Run `pnpm dev` for development or `pnpm build && pnpm preview` to run production mode.
-
-<a href="contributing"></a>
 
 ## Contributing
 
@@ -168,16 +155,12 @@ This project is private and open only to contributions from students in the cour
 
 9. **Code review**: Wait for the code review from other students. You may be asked for additional changes before your contribution is accepted.
 
-<a href="branch-convention"></a>
-
 ### Branch Convention
 
 - feature/branch-name: Add new feature.
 - fix/branch-name: Fix a bug.
 - docs/branch-name: Changes in the docs.
 - refactor/branch-name: Refactor code.
-
-<a href="commits-convention"></a>
 
 ### Commits Convention
 
@@ -196,8 +179,6 @@ feat: add login
 ```
 
 You can learn more in this [article](https://codigofacilito.com/articulos/buenas-practicas-en-commits-de-git).
-
-<a href="commits-convention"></a>
 
 ## License
 
