@@ -1,63 +1,88 @@
-<a name="top"></a>
-
 <p align="center">
-  <img title="JavaScript" src="https://res.cloudinary.com/idepixel/image/upload/c_scale,h_100,w_200/v1683961930/parental_advisory_nerd.webp"/>
-</p>
-
-<hr>
-<p align="center">
-  UNIVERSIDAD NACIONAL EXPERIMENTAL DE GUAYANA<br>
-  Virrectorado Académico<br>
+  Universidad Nacional Experimental de Guayana<br>
+  Vicerrectorado Académico<br>
   Coordinación General de Pregrado<br>
   Ingeniería Informática<br>
   Desarrollo Web
 </p>
 
-# INDEX
+# Tech Talent Hub
 
-- [¿WHAT IS TECH TALENT HUB?](#what-is)
-- [REQUIREMENTS](#requirements)
-- [STEPS TO DOWNLOAD, CONFIGURE AND USE THE APPLICATION](#main-steps)
-  - [Download](#download)
-  - [Install dependencies](#install-dependencies)
-  - [Configure environment variables](#configure-env)
-  - [Start application in your local machine](#start-app)
-- [TECHNOLOGIES THAT WE USED](#technologies)
-- [CONTRIBUTIONS](#contributions)
-- [LICENSE](#license)
+## TOC
 
-<a name="what-is"></a>
+- [What is Tech Talent Hub?](#what-is-tech-talent-hub)
+- [Requirements](#requirements)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Start the Application](#start-the-application)
+- [Contributing](#contributing)
+  - [Branch Convention](#branch-convention)
+  - [Commits Convention](#commits-convention)
+- [License](#license)
 
-# ¿WHAT IS TECH TALENT HUB?
+## What is Tech Talent Hub?
 
 TechTalentHub is designed to streamline the recruitment of IT professionals, providing a robust platform for both companies seeking specialized IT talent and IT professionals looking for employment opportunities. This web facilitates user registration, profile creation, job searches with advanced filtering, and direct job application functionalities. Ideal for enhancing the hiring process, TechTalentHub ensures a smooth, efficient interaction for all users in the tech industry.
 
-<a name="requirements"></a>
+## Requirements
 
-# REQUIREMENTS
+- [Git](https://git-scm.com/downloads)
+- [Node](https://nodejs.org/en/download)
+- [pnpm](https://pnpm.io/es/installation) - This is recommended, but you can use any package manager like npm or [yarn](https://yarnpkg.com/)
 
-- [Git](https://gitforwindows.org/) installed in your machine.
-- [pnpm](https://pnpm.io/es/) installed and configured in your machine.
-- [node](https://nodejs.org/es/download/) installed and configured in your machine.
-- Text editor like [VS Code](https://code.visualstudio.com/).
+## Technologies
 
-We recommend use [NVM](https://github.com/coreybutler/nvm-windows) to manage Node versions.
+- [Node](https://nodejs.org/en/download)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://es.react.dev/) - UI library
+- [Tailwind CSS](https://tailwindcss.com/) - The CSS Framework
+- [shadcn/ui](https://ui.shadcn.com/) - Component library
 
-<a name="main-steps"></a>
+## Project Structure
 
-# STEPS TO DOWNLOAD, CONFIGURE AND USE THE APPLICATION
+Inside of your React project, you'll see the following folders and files:
 
-<p align="center">
-  <img src="https://res.cloudinary.com/idepixel/image/upload/c_scale,h_260,w_360/v1651348337/Landing/service-image.webp" alt="Download and configure">
-</p>
+```text
+/
+├── public/
+├── src/
+│   ├── api/
+│   ├── assets/
+│   ├── components/
+│   ├── features/
+│   |   └── components/
+│   |   └── hooks/
+│   |   └── pages/
+│   ├── hooks/
+│   |── lib/
+│   |   └── utils.ts
+│   ├── index.css
+│   └── main.tsx
+└── package.json
+```
 
-<a name="download"></a>
+The `public` folder contains things like the page favicon or manifest.
 
-## > Download
+The `assets` folder contains the different assets like images and icons.
 
-You can download the application by copying its link, either by ssh or https. The git command you need to run is as follows:
+The `components` folder contains the different UI shared components of the application.
 
-```sh
+The `hooks` folder contains the different hooks of the application.
+
+The `features` folder contains the different features of the application. Every feature can have its `pages`,`hooks` and `components`.
+
+The `lib` folder contains functions or constants that may be used in different parts of the application.
+
+The `index.css` containts the Tailwind CSS base and shadcn/ui styling.
+
+The `main.tsx` is the entry point.
+
+## Installation
+
+1. Clone the repository.
+
+```bash
 # HTTPS =====================================================!
 
 # Clone repository
@@ -79,77 +104,20 @@ $ git clone git@github.com:dancrewzus/tech-talent-hub-front.git your-folder-name
 $ cd your-folder-name
 ```
 
-<a name="install-dependencies"></a>
+2. Use the package manager to install the dependencies.
 
-## > Install dependencies
-
-In the application root folder, type this command in the command line terminal:
-
-```sh
-# Install dependencies with pnpm
-$ pnpm install
-
-# Install dependencies with npm
-$ npm install
-
-# Install dependencies with Yarn
-$ yarn install
+```bash
+pnpm install
 ```
 
-<a name="configure-env"></a>
+## Start the Application
 
-## > Configure environment variables
+1. Create an `.env.development` and `.env.production` based on the `.env.example`.
+2. Run `pnpm dev` for development or `pnpm build && pnpm preview` to run production mode.
 
-The app uses some environment variables to get its important data like the API URL, keys or any other information. These variables must be created directly on your computer and you must assign values ​​to the data that appears below:
-
-```sh
-# API URL
-BASE_API_URL=""
-
-# GENERAL
-PUBLIC_API_TOKEN=""
-```
-
-You must create an `.env.development` with the development keys. In other hand, you have to create an `.env.production` to set the production keys.
-
-<a name="start-app"></a>
-
-## > Start application in your local machine
-
-To start the application, we must execute the following command:
-
-```sh
-# development
-$ pnpm dev
-
-# production mode
-$ pnpm build && pnpm preview
-```
-
-> If you want to stop the execution press (ctrl + c) / (cmd + c) in the command line terminal.
-
-<a name="technologies"></a>
-
-# TECHNOLOGIES THAT WE USED
-
-This is the list of technologies that i use in the development of this front.
-<br>
-<br>
-
-- NodeJS
-- React
-- JavaScript
-- TypeScript
-- Tailwind
-- shadcn/ui
-
-<a name="contributions"></a>
-
-# CONTRIBUTIONS
+## Contributing
 
 This project is private and open only to contributions from students in the course and the professor. Below are the guidelines for contributing to the TechTalentHub Front project:
-
-## How to contribute
 
 1. **Repository access**: Ensure you have access to the repository.
 
@@ -187,23 +155,31 @@ This project is private and open only to contributions from students in the cour
 
 9. **Code review**: Wait for the code review from other students. You may be asked for additional changes before your contribution is accepted.
 
-## Contribution guidelines
+### Branch Convention
 
-- **Respectful communication**: Maintain respectful and constructive communication during PR discussions and other exchanges.
-- **Code documentation**: Comment your code where necessary to ensure it is easy to understand and maintain.
-- **Testing**: Include tests with your contributions to ensure the stability and functionality of the project.
-- **Keep scope**: Ensure your contributions align with the project's goals and do not divert its focus.
+- feature/branch-name: Add new feature.
+- fix/branch-name: Fix a bug.
+- docs/branch-name: Changes in the docs.
+- refactor/branch-name: Refactor code.
 
-We appreciate your interest in contributing and look forward to your innovative inputs to improve the TechTalentHub Front project.
+### Commits Convention
 
-<a name="license"></a>
+- feat: Add a new feature.
+- fix: Bug solved.
+- docs: Changes in the docs.
+- style: Applied any format styling change. No code changes.
+- refactor: Code refactoring,
+- test: Added tests.
+- chore: Update packages or settings. No code changes.
 
-# LICENSE
+For example, if you added the login feature. Then the commit will look like this:
+
+```git
+feat: add login
+```
+
+You can learn more in this [article](https://codigofacilito.com/articulos/buenas-practicas-en-commits-de-git).
+
+## License
 
 This project is licensed under the [MIT licensed](LICENSE).
-
-<br><hr>
-
-<p align="center">
-  Universidad Nacional Experimental de Guayana (UNEG) | 2024
-</p>
