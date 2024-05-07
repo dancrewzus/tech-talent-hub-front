@@ -6,7 +6,7 @@
   Desarrollo Web
 </p>
 
-<h1 align="center">Tech Talent Hub</h1>
+# Tech Talent Hub
 
 ## TOC
 
