@@ -10,8 +10,10 @@
 		"<THIRD_PARTY_MODULES>",
 		"^@/api/(.*)$",
 		"^@/assets/(.*)$",
+		"^@/models/(.*)$",
 		"^@/components/(.*)$",
 		"^@/hooks/(.*)$",
+		"^@/services/(.*)$",
 		"^@/lib/(.*)$",
 		"^@/features/(.*)$",
 		"^[./]"
