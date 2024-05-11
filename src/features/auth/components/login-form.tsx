@@ -16,8 +16,6 @@ import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-import { tokenService } from "@/services/token-service";
-
 export function LoginForm() {
 	const { toast } = useToast();
 
@@ -38,13 +36,6 @@ export function LoginForm() {
 	) => {
 		const response = await authApi.login(loginCredentials);
 
-		if (response === null) {
-			return toast({
-				title: "Ha ocurrido un error",
-				description: "Intente más tarde",
-			});
-		}
-
 		if (response === null || isErrorResponse(response)) {
 			const messages: { [key: number]: string } = {
 				400: "Email o contraseña invalidos",
@@ -52,14 +43,19 @@ export function LoginForm() {
 				500: "Error interno",
 			};
 
+			let message = "Intente más tarde";
+
+			if (response && message[response.statusCode]) {
+				message = messages[response.statusCode]!;
+			}
+
 			return toast({
 				title: "Ha ocurrido un error",
-				description: messages[response.statusCode] ?? "Intente más tarde",
+				description: message,
 			});
 		}
 
 		// Logged in.
-		tokenService.set(response.token);
 	};
 
 	return (
