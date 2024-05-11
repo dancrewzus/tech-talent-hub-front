@@ -1,20 +1,26 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatISO } from "date-fns";
+import dayjs from "dayjs";
 import { Loader2 } from "lucide-react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 
-import { UserRegister, UserRegisterType } from "@/models/user-register";
+import { authApi } from "@/api/auth-api";
 
-import { DatePickerField } from "@/components/date-picker-field";
+import { isErrorResponse } from "@/models/error-response";
+import { UserRegister, type UserRegisterType } from "@/models/user-register";
+
 import { PasswordField } from "@/components/password-field";
+import { RadioGroupField } from "@/components/radio-group-field";
 import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 export function SignUpForm() {
+	const { toast } = useToast();
+
 	const {
 		register,
 		handleSubmit,
-		setValue,
+		control,
 		formState: { errors, isSubmitting },
 	} = useForm<UserRegisterType>({
 		resolver: zodResolver(UserRegister),
@@ -31,7 +37,16 @@ export function SignUpForm() {
 	});
 
 	const onSubmit: SubmitHandler<UserRegisterType> = async (user) => {
-		console.log(user);
+		const response = await authApi.register(user);
+
+		if (response === null || isErrorResponse(response)) {
+			return toast({
+				title: "Ha ocurrido un error",
+				description: "Intente más tarde",
+			});
+		}
+
+		// Logged in.
 	};
 
 	return (
@@ -41,6 +56,32 @@ export function SignUpForm() {
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<div className="space-y-4">
+				<TextField
+					id="email"
+					labelProps={{
+						children: "Email",
+					}}
+					inputProps={{
+						placeholder: "ej: johndoe@gmail.com",
+						autoComplete: "email",
+						type: "email",
+						...register("email"),
+					}}
+					errorMessage={errors.email?.message}
+				/>
+
+				<PasswordField
+					id="password"
+					labelProps={{
+						children: "Contraseña",
+					}}
+					inputProps={{
+						autoComplete: "new-password",
+						...register("password"),
+					}}
+					errorMessage={errors.password?.message}
+				/>
+
 				<TextField
 					id="name"
 					labelProps={{
@@ -69,21 +110,46 @@ export function SignUpForm() {
 					errorMessage={errors.paternalSurname?.message}
 				/>
 
-				<DatePickerField
+				<TextField
 					id="bday"
 					labelProps={{
 						children: "Fecha de nacimiento",
 					}}
-					onSelect={(date) =>
-						setValue(
-							"birthDate",
-							date ? formatISO(date, { representation: "date" }) : "",
-						)
-					}
-					disabled={(date) =>
-						date > new Date() || date < new Date("1900-01-01")
-					}
+					inputProps={{
+						autoComplete: "bday",
+						type: "date",
+						max: dayjs().format("YYYY-MM-DD"),
+						...register("birthDate"),
+					}}
 					errorMessage={errors.birthDate?.message}
+				/>
+
+				<Controller
+					control={control}
+					name="gender"
+					render={({ field }) => {
+						return (
+							<RadioGroupField<UserRegisterType["gender"]>
+								id="gender"
+								legendProps={{
+									children: "Género",
+								}}
+								options={[
+									{
+										label: "Masculino",
+										value: "male",
+									},
+									{
+										label: "Femenino",
+										value: "female",
+									},
+								]}
+								value={field.value}
+								onValueChange={field.onChange}
+								errorMessage={errors.gender?.message}
+							/>
+						);
+					}}
 				/>
 
 				<TextField
@@ -92,38 +158,12 @@ export function SignUpForm() {
 						children: "Dirección",
 					}}
 					inputProps={{
-						placeholder: "",
+						placeholder: "ej: Venezuela, Estado Bolívar",
 						autoComplete: "address-level1",
 						type: "text",
 						...register("address"),
 					}}
 					errorMessage={errors.address?.message}
-				/>
-
-				<TextField
-					id="email"
-					labelProps={{
-						children: "Email",
-					}}
-					inputProps={{
-						placeholder: "ej: johndoe@gmail.com",
-						autoComplete: "email",
-						type: "email",
-						...register("email"),
-					}}
-					errorMessage={errors.email?.message}
-				/>
-
-				<PasswordField
-					id="password"
-					labelProps={{
-						children: "Contraseña",
-					}}
-					inputProps={{
-						autoComplete: "new-password",
-						...register("password"),
-					}}
-					errorMessage={errors.password?.message}
 				/>
 			</div>
 

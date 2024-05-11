@@ -1,5 +1,3 @@
-import { setDefaultOptions } from "date-fns";
-import { es } from "date-fns/locale";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,9 +8,6 @@ import { SignUpPage } from "./features/auth/pages/sign-up-page";
 import { ErrorPage } from "./features/error/error-page";
 import { LandingPage } from "./features/landing/landing-page";
 import "./index.css";
-
-// Sets the 'es' as locale default for date-fns.
-setDefaultOptions({ locale: es });
 
 const router = createBrowserRouter([
 	{
