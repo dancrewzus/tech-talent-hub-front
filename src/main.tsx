@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { BasePage } from "./components/base-page";
 import { Toaster } from "./components/ui/toaster";
 import { LoginPage } from "./features/auth/pages/login-page";
 import { SignUpPage } from "./features/auth/pages/sign-up-page";
@@ -11,17 +12,22 @@ import "./index.css";
 
 const router = createBrowserRouter([
 	{
-		path: "/",
-		element: <LandingPage />,
+		element: <BasePage />,
 		errorElement: <ErrorPage />,
-	},
-	{
-		path: "/sign-up",
-		element: <SignUpPage />,
-	},
-	{
-		path: "/login",
-		element: <LoginPage />,
+		children: [
+			{
+				path: "/",
+				element: <LandingPage />,
+			},
+			{
+				path: "/sign-up",
+				element: <SignUpPage />,
+			},
+			{
+				path: "/login",
+				element: <LoginPage />,
+			},
+		],
 	},
 ]);
 

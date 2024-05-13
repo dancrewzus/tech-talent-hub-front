@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import googleLogo from "@/assets/google.svg";
 
-import { BasePage } from "@/components/base-page";
+import { Main } from "@/components/main";
 import { Button } from "@/components/ui/button";
 
 import { SignUpForm } from "../components/sign-up-form";
@@ -10,7 +10,7 @@ import { TextSeparator } from "../components/text-separator";
 
 export function SignUpPage() {
 	return (
-		<BasePage className="flex flex-col items-center justify-center px-6 py-12">
+		<Main className="flex flex-col items-center justify-center px-6 py-12">
 			<div className="w-full max-w-lg space-y-8">
 				<div className="space-y-2">
 					<h1 className="text-3xl font-semibold md:text-center">Regístrate</h1>
@@ -35,6 +35,6 @@ export function SignUpPage() {
 					</Link>
 				</p>
 			</div>
-		</BasePage>
+		</Main>
 	);
 }

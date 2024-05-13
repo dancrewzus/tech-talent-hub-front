@@ -1,4 +1,4 @@
-import { BasePage } from "@/components/base-page";
+import { Main } from "@/components/main";
 import { Separator } from "@/components/ui/separator";
 
 import { CategoriesSlider } from "./components/categories-slider";
@@ -7,7 +7,7 @@ import { Sections } from "./components/sections";
 
 export function LandingPage() {
 	return (
-		<BasePage className="mx-auto w-full max-w-screen-xl space-y-8 pb-12 sm:px-6 sm:pt-12">
+		<Main className="mx-auto w-full max-w-screen-xl space-y-8 pb-12 sm:px-6 sm:pt-12">
 			<Hero />
 
 			<Separator />
@@ -19,6 +19,6 @@ export function LandingPage() {
 			<div className="px-6 sm:px-0">
 				<Sections />
 			</div>
-		</BasePage>
+		</Main>
 	);
 }
