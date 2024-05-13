@@ -3,7 +3,7 @@ import { Session } from "@/models/session";
 import type { UserTyoe } from "@/models/user";
 import type { UserCredentialsType } from "@/models/user-credentials";
 
-import { tokenService } from "@/services/token-service";
+import { tokenManager } from "@/services/token-manager";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -27,7 +27,7 @@ export const authApi = {
 		const parsed = createApiResponseSchema(Session).safeParse(json);
 
 		if (parsed.success && !isErrorResponse(parsed.data)) {
-			tokenService.set(parsed.data.token);
+			tokenManager.set(parsed.data.token);
 		}
 
 		return parsed.success ? parsed.data : null;
@@ -50,7 +50,7 @@ export const authApi = {
 		const parsed = createApiResponseSchema(Session).safeParse(json);
 
 		if (parsed.success && !isErrorResponse(parsed.data)) {
-			tokenService.set(parsed.data.token);
+			tokenManager.set(parsed.data.token);
 		}
 
 		return parsed.success ? parsed.data : null;

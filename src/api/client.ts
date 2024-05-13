@@ -1,4 +1,4 @@
-import { tokenService } from "@/services/token-service";
+import { tokenManager } from "@/services/token-manager";
 
 interface Request extends Omit<RequestInit, "body"> {
 	method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
@@ -9,7 +9,7 @@ export async function client(
 	endpoint: string,
 	{ body, ...customConfig }: Request,
 ) {
-	const token = tokenService.get();
+	const token = tokenManager.get();
 	const headers: RequestInit["headers"] = {
 		accept: "application/json",
 		"Content-Type": "application/json",
