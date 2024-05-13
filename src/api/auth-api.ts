@@ -1,7 +1,7 @@
 import { isErrorResponse } from "@/models/error-response";
 import { Session } from "@/models/session";
+import type { UserTyoe } from "@/models/user";
 import type { UserCredentialsType } from "@/models/user-credentials";
-import type { UserRegisterType } from "@/models/user-register";
 
 import { tokenService } from "@/services/token-service";
 
@@ -40,7 +40,7 @@ export const authApi = {
 	 * @returns A promise that resolves to a session if register is successful.
 	 * Otherwise an error response or null.
 	 */
-	async register(user: UserRegisterType) {
+	async register(user: UserTyoe) {
 		const response = await client("v1/auth/register", {
 			method: "POST",
 			body: user,

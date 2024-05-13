@@ -2,13 +2,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
 import { Loader2 } from "lucide-react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import { type Value } from "react-phone-number-input";
 
 import { authApi } from "@/api/auth-api";
 
 import { isErrorResponse } from "@/models/error-response";
-import { UserRegister, type UserRegisterType } from "@/models/user-register";
+import { User, type UserTyoe } from "@/models/user";
 
 import { PasswordField } from "@/components/password-field";
+import { PhoneInputField } from "@/components/phone-input-field";
 import { RadioGroupField } from "@/components/radio-group-field";
 import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
@@ -22,8 +24,8 @@ export function SignUpForm() {
 		handleSubmit,
 		control,
 		formState: { errors, isSubmitting },
-	} = useForm<UserRegisterType>({
-		resolver: zodResolver(UserRegister),
+	} = useForm<UserTyoe>({
+		resolver: zodResolver(User),
 		values: {
 			address: "",
 			birthDate: "",
@@ -33,20 +35,35 @@ export function SignUpForm() {
 			password: "",
 			paternalSurname: "",
 			profilePicture: "",
+			phoneNumber: "",
+			role: "",
 		},
 	});
 
-	const onSubmit: SubmitHandler<UserRegisterType> = async (user) => {
+	const onSubmit: SubmitHandler<UserTyoe> = async (user) => {
 		const response = await authApi.register(user);
 
 		if (response === null || isErrorResponse(response)) {
+			const messages: { [key: number]: string } = {
+				400: "Ha ocurrido un error de validación",
+				404: "Rol no encontrado",
+				500: "Error interno",
+			};
+
 			return toast({
 				title: "Ha ocurrido un error",
-				description: "Intente más tarde",
+				description:
+					response && messages[response.statusCode]
+						? messages[response.statusCode]!
+						: "Intente más tarde",
 			});
 		}
 
 		// Logged in.
+		return toast({
+			title: "Bienvenido",
+			description: "Te has registrado con éxito",
+		});
 	};
 
 	return (
@@ -70,16 +87,26 @@ export function SignUpForm() {
 					errorMessage={errors.email?.message}
 				/>
 
-				<PasswordField
-					id="password"
-					labelProps={{
-						children: "Contraseña",
+				<Controller
+					control={control}
+					name="password"
+					render={({ field }) => {
+						return (
+							<PasswordField
+								id="password"
+								labelProps={{
+									children: "Contraseña",
+								}}
+								inputProps={{
+									autoComplete: "new-password",
+									value: field.value,
+									onChange: field.onChange,
+								}}
+								errorMessage={errors.password?.message}
+								showRequirements
+							/>
+						);
 					}}
-					inputProps={{
-						autoComplete: "new-password",
-						...register("password"),
-					}}
-					errorMessage={errors.password?.message}
 				/>
 
 				<TextField
@@ -129,7 +156,7 @@ export function SignUpForm() {
 					name="gender"
 					render={({ field }) => {
 						return (
-							<RadioGroupField<UserRegisterType["gender"]>
+							<RadioGroupField<UserTyoe["gender"]>
 								id="gender"
 								legendProps={{
 									children: "Género",
@@ -147,6 +174,27 @@ export function SignUpForm() {
 								value={field.value}
 								onValueChange={field.onChange}
 								errorMessage={errors.gender?.message}
+							/>
+						);
+					}}
+				/>
+
+				<Controller
+					control={control}
+					name="phoneNumber"
+					render={({ field }) => {
+						return (
+							<PhoneInputField
+								id="phone"
+								labelProps={{ children: "Número de teléfono" }}
+								inputProps={{
+									value: field.value as Value,
+									onChange: field.onChange,
+									defaultCountry: "VE",
+									placeholder: "",
+									international: true,
+								}}
+								errorMessage={errors.phoneNumber?.message}
 							/>
 						);
 					}}

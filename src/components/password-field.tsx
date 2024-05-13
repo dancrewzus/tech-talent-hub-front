@@ -1,4 +1,4 @@
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Check, EyeIcon, EyeOffIcon, X } from "lucide-react";
 import { useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +21,7 @@ interface Props {
 	errorMessage?: string;
 	description?: string;
 	className?: string;
+	showRequirements?: boolean;
 }
 
 export function PasswordField({
@@ -30,6 +31,7 @@ export function PasswordField({
 	inputProps,
 	errorMessage,
 	className,
+	showRequirements = false,
 }: Props) {
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -71,6 +73,57 @@ export function PasswordField({
 			</div>
 
 			<FormError message={errorMessage} />
+
+			{showRequirements ? (
+				<Requirements
+					value={typeof inputProps.value === "string" ? inputProps.value : ""}
+				/>
+			) : null}
 		</div>
+	);
+}
+
+function Requirements({ value }: { value: string }) {
+	const requirements: Array<{ title: string; isValid: () => boolean }> = [
+		{ title: "6 o más caracteres", isValid: () => value.length >= 6 },
+		{
+			title: "Contiene una letra mayúscula",
+			isValid: () => /[A-Z]{1,}/.test(value),
+		},
+		{
+			title: "Contiene una letra minúscula",
+			isValid: () => /[a-z]{1,}/.test(value),
+		},
+		{
+			title: "Contiene un número",
+			isValid: () => /[0-9]{1,}/.test(value),
+		},
+	];
+
+	return (
+		<ul className="space-y-1">
+			{requirements.map((requirement) => {
+				const isValid = requirement.isValid();
+
+				return (
+					<li key={requirement.title} className="flex items-center gap-2">
+						{isValid ? (
+							<Check className="h-4 w-4 text-green-400" />
+						) : (
+							<X className="h-4 w-4" />
+						)}
+
+						<span
+							className={cn(
+								"text-sm",
+								isValid ? "text-green-400" : "text-muted-foreground",
+							)}
+						>
+							{requirement.title}
+						</span>
+					</li>
+				);
+			})}
+		</ul>
 	);
 }
