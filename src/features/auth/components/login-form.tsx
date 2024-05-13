@@ -43,19 +43,20 @@ export function LoginForm() {
 				500: "Error interno",
 			};
 
-			let message = "Intente más tarde";
-
-			if (response && message[response.statusCode]) {
-				message = messages[response.statusCode]!;
-			}
-
 			return toast({
 				title: "Ha ocurrido un error",
-				description: message,
+				description:
+					response && messages[response.statusCode]
+						? messages[response.statusCode]!
+						: "Intente más tarde",
 			});
 		}
 
 		// Logged in.
+		return toast({
+			title: "Bienvenido",
+			description: "Has ingresado con éxito",
+		});
 	};
 
 	return (
