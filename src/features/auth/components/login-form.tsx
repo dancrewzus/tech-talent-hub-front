@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { Navigate, useLocation } from "react-router-dom";
 
 import { authApi } from "@/api/auth-api";
 
@@ -16,7 +17,11 @@ import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
+import { useSession } from "@/hooks/use-session";
+
 export function LoginForm() {
+	const { session, update } = useSession();
+	const location = useLocation();
 	const { toast } = useToast();
 
 	const {
@@ -30,6 +35,14 @@ export function LoginForm() {
 			password: "",
 		},
 	});
+
+	/// Navigate to other route because the user has an active session.
+	if (session) {
+		const search: string = location.state?.from?.search || "";
+		const from: string = location.state?.from?.pathname || "/offers";
+
+		return <Navigate to={from.concat(search)} />;
+	}
 
 	const onSubmit: SubmitHandler<UserCredentialsType> = async (
 		loginCredentials,
@@ -53,6 +66,8 @@ export function LoginForm() {
 		}
 
 		// Logged in.
+		update(response);
+
 		return toast({
 			title: "Bienvenido",
 			description: "Has ingresado con éxito",

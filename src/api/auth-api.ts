@@ -1,9 +1,9 @@
 import { isErrorResponse } from "@/models/error-response";
 import { Session } from "@/models/session";
-import type { UserTyoe } from "@/models/user";
 import type { UserCredentialsType } from "@/models/user-credentials";
+import type { UserRegisterType } from "@/models/user-register";
 
-import { tokenManager } from "@/services/token-manager";
+import { sessionManager } from "@/services/session-manager";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -27,7 +27,7 @@ export const authApi = {
 		const parsed = createApiResponseSchema(Session).safeParse(json);
 
 		if (parsed.success && !isErrorResponse(parsed.data)) {
-			tokenManager.set(parsed.data.token);
+			sessionManager.set(parsed.data);
 		}
 
 		return parsed.success ? parsed.data : null;
@@ -40,7 +40,7 @@ export const authApi = {
 	 * @returns A promise that resolves to a session if register is successful.
 	 * Otherwise an error response or null.
 	 */
-	async register(user: UserTyoe) {
+	async register(user: UserRegisterType) {
 		const response = await client("v1/auth/register", {
 			method: "POST",
 			body: user,
@@ -50,7 +50,27 @@ export const authApi = {
 		const parsed = createApiResponseSchema(Session).safeParse(json);
 
 		if (parsed.success && !isErrorResponse(parsed.data)) {
-			tokenManager.set(parsed.data.token);
+			sessionManager.set(parsed.data);
+		}
+
+		return parsed.success ? parsed.data : null;
+	},
+	/**
+	 * Checks wether the user is authenticated.
+	 *
+	 * @returns A promise that resolves to a session if the status check is successful.
+	 * Otherwise an error response or null.
+	 */
+	async checkStatus() {
+		const response = await client("v1/auth/check-status", {
+			method: "GET",
+		});
+
+		const json = await response?.json();
+		const parsed = createApiResponseSchema(Session).safeParse(json);
+
+		if (parsed.success && !isErrorResponse(parsed.data)) {
+			sessionManager.set(parsed.data);
 		}
 
 		return parsed.success ? parsed.data : null;

@@ -1,4 +1,4 @@
-import { tokenManager } from "@/services/token-manager";
+import { sessionManager } from "@/services/session-manager";
 
 interface Request extends Omit<RequestInit, "body"> {
 	method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
@@ -9,14 +9,14 @@ export async function client(
 	endpoint: string,
 	{ body, ...customConfig }: Request,
 ) {
-	const token = tokenManager.get();
+	const session = sessionManager.get();
 	const headers: RequestInit["headers"] = {
 		accept: "application/json",
 		"Content-Type": "application/json",
 	};
 
-	if (token) {
-		headers.Authorization = `Bearer ${token}`;
+	if (session) {
+		headers.Authorization = `Bearer ${session.token}`;
 	}
 
 	try {

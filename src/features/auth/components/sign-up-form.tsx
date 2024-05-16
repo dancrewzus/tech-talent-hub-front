@@ -3,11 +3,12 @@ import dayjs from "dayjs";
 import { Loader2 } from "lucide-react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { type Value } from "react-phone-number-input";
+import { Navigate, useLocation } from "react-router-dom";
 
 import { authApi } from "@/api/auth-api";
 
 import { isErrorResponse } from "@/models/error-response";
-import { User, type UserTyoe } from "@/models/user";
+import { UserRegister, type UserRegisterType } from "@/models/user-register";
 
 import { PasswordField } from "@/components/password-field";
 import { PhoneInputField } from "@/components/phone-input-field";
@@ -16,7 +17,11 @@ import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
+import { useSession } from "@/hooks/use-session";
+
 export function SignUpForm() {
+	const { session, update } = useSession();
+	const location = useLocation();
 	const { toast } = useToast();
 
 	const {
@@ -24,8 +29,8 @@ export function SignUpForm() {
 		handleSubmit,
 		control,
 		formState: { errors, isSubmitting },
-	} = useForm<UserTyoe>({
-		resolver: zodResolver(User),
+	} = useForm<UserRegisterType>({
+		resolver: zodResolver(UserRegister),
 		values: {
 			address: "",
 			birthDate: "",
@@ -40,8 +45,19 @@ export function SignUpForm() {
 		},
 	});
 
-	const onSubmit: SubmitHandler<UserTyoe> = async (user) => {
-		const response = await authApi.register(user);
+	/// Navigate to other route because the user has an active session.
+	if (session) {
+		const search: string = location.state?.from?.search || "";
+		const from: string = location.state?.from?.pathname || "/offers";
+
+		return <Navigate to={from.concat(search)} />;
+	}
+
+	const onSubmit: SubmitHandler<UserRegisterType> = async (user) => {
+		const response = await authApi.register({
+			...user,
+			role: "6642953aa0b93451d98a9f61",
+		});
 
 		if (response === null || isErrorResponse(response)) {
 			const messages: { [key: number]: string } = {
@@ -60,6 +76,8 @@ export function SignUpForm() {
 		}
 
 		// Logged in.
+		update(response);
+
 		return toast({
 			title: "Bienvenido",
 			description: "Te has registrado con éxito",
@@ -156,7 +174,7 @@ export function SignUpForm() {
 					name="gender"
 					render={({ field }) => {
 						return (
-							<RadioGroupField<UserTyoe["gender"]>
+							<RadioGroupField<UserRegisterType["gender"]>
 								id="gender"
 								legendProps={{
 									children: "Género",
