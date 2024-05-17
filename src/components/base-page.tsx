@@ -1,3 +1,6 @@
+import { useState } from "react";
+import PrivacyPolicyModal from "./PrivacyPolicyModal";
+import TermsOfUseModal from "./TermsOfUseModal";
 import { cn } from "@/lib/utils";
 
 import { Footer } from "./footer";
@@ -10,6 +13,8 @@ export function BasePage({
 	children: React.ReactNode;
 	className?: string;
 }) {
+	const [showModal, setShowModal] = useState<string | null>(null);
+	
 	return (
 		<div className="relative flex min-h-screen flex-col">
 			<header className="sticky top-0 z-50 flex w-full items-center border-b border-border/40 bg-background/95 py-2.5 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -18,7 +23,9 @@ export function BasePage({
 
 			<main className={cn("flex-1", className)}>{children}</main>
 
-			<Footer />
+			<Footer setShowModal={setShowModal} />
+			{showModal === "privacy" && <PrivacyPolicyModal setShowModal={setShowModal}/>}
+			{showModal === "terms" && <TermsOfUseModal setShowModal={setShowModal} />}
 		</div>
 	);
 }
