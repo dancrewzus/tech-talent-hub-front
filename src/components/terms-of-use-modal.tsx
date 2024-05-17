@@ -1,6 +1,6 @@
 import { DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 
-export function TermsOfUseModa() {
+export function TermsOfUseModal() {
 	return (
 		<DialogContent className="overflow-auto sm:w-full sm:max-w-xl">
 			<DialogHeader>
