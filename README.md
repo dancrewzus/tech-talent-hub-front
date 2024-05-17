@@ -57,6 +57,8 @@ Inside of your React project, you'll see the following folders and files:
 │   ├── hooks/
 │   |── lib/
 │   |   └── utils.ts
+│   |── models/
+│   |── services/
 │   ├── index.css
 │   └── main.tsx
 └── package.json
@@ -73,6 +75,10 @@ The `hooks` folder contains the different hooks of the application.
 The `features` folder contains the different features of the application. Every feature can have its `pages`,`hooks` and `components`.
 
 The `lib` folder contains functions or constants that may be used in different parts of the application.
+
+The `models` folder contains the Zod model objects for validation and their types.
+
+The `services` folder contains services such as the token manager.
 
 The `index.css` containts the Tailwind CSS base and shadcn/ui styling.
 
