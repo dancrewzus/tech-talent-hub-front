@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 
 import googleLogo from "@/assets/google.svg";
 
-import { Main } from "@/components/main";
-import { Button } from "@/components/ui/button";
-
+import { Main } from "../../../components/main";
+import { Button } from "../../../components/ui/button";
 import { SignUpForm } from "../components/sign-up-form";
 import { TextSeparator } from "../components/text-separator";
 

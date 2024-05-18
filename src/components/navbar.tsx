@@ -1,10 +1,8 @@
 import { LifeBuoy, LogOut, User } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
-import { useSession } from "@/hooks/use-session";
-
-import { cn } from "@/lib/utils";
-
+import { useSession } from "../hooks/use-session";
+import { cn } from "../lib/utils";
 import { Drawer, DrawerItem } from "./drawer";
 import { Button } from "./ui/button";
 import {
@@ -36,6 +34,11 @@ const routes: Array<{
 		title: "Registro",
 		to: "/sign-up",
 		isProtected: false,
+	},
+	{
+		title: "Soporte",
+		to: "/support",
+		isProtected: true,
 	},
 ];
 
@@ -89,7 +92,7 @@ export function NavBar() {
 								<DropdownMenuGroup>
 									<DropdownMenuItem>
 										<LifeBuoy className="mr-2 h-4 w-4" />
-										<span>Soporte</span>
+										<Link to="/support">Soporte</Link>
 									</DropdownMenuItem>
 
 									<DropdownMenuItem onClick={() => logout()}>

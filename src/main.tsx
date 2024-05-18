@@ -10,6 +10,7 @@ import { SignUpPage } from "./features/auth/pages/sign-up-page";
 import { ErrorPage } from "./features/error/error-page";
 import { LandingPage } from "./features/landing/landing-page";
 import { OffersPage } from "./features/offers/pages/offers-page";
+import { SupportPage } from "./features/support/pages/support-page";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -29,12 +30,17 @@ const router = createBrowserRouter([
 				path: "/login",
 				element: <LoginPage />,
 			},
+
 			{
 				element: <ProtectedRoute />,
 				children: [
 					{
 						path: "/offers",
 						element: <OffersPage />,
+					},
+					{
+						path: "/support",
+						element: <SupportPage />,
 					},
 				],
 			},
