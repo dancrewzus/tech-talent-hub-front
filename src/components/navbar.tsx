@@ -1,8 +1,10 @@
 import { LifeBuoy, LogOut, User } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
-import { useSession } from "../hooks/use-session";
-import { cn } from "../lib/utils";
+import { useSession } from "@/hooks/use-session";
+
+import { cn } from "@/lib/utils";
+
 import { Drawer, DrawerItem } from "./drawer";
 import { Button } from "./ui/button";
 import {
@@ -34,11 +36,6 @@ const routes: Array<{
 		title: "Registro",
 		to: "/sign-up",
 		isProtected: false,
-	},
-	{
-		title: "Soporte",
-		to: "/support",
-		isProtected: true,
 	},
 ];
 
