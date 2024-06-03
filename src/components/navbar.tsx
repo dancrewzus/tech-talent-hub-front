@@ -87,9 +87,11 @@ export function NavBar() {
 								<DropdownMenuSeparator />
 
 								<DropdownMenuGroup>
-									<DropdownMenuItem>
-										<LifeBuoy className="mr-2 h-4 w-4" />
-										<span>Soporte</span>
+									<DropdownMenuItem asChild>
+										<Link to="/support">
+											<LifeBuoy className="mr-2 h-4 w-4" />
+											<span>Soporte</span>
+										</Link>
 									</DropdownMenuItem>
 
 									<DropdownMenuItem onClick={() => logout()}>
