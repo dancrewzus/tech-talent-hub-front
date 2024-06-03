@@ -1,9 +1,6 @@
-import { Link } from "react-router-dom";
-
 import { Main } from "@/components/main.tsx";
-import { Button } from "@/components/ui/button.tsx";
 
-import { AccordionSupport } from "../components/support-page-accordion.tsx";
+import { AccordionSupport } from "../components/accordion-support";
 
 export function SupportPage() {
 	return (
@@ -13,13 +10,8 @@ export function SupportPage() {
 				¿Cómo podemos ayudarte?
 			</span>
 
-			<div className="w-full md:w-1/4 lg:w-1/3">
+			<div className="w-full max-w-lg">
 				<AccordionSupport />
-			</div>
-			<div>
-				<Button asChild>
-					<Link to="#">Reportar un problema</Link>
-				</Button>
 			</div>
 		</Main>
 	);
