@@ -9,6 +9,7 @@ import { LoginPage } from "./features/auth/pages/login-page";
 import { SignUpPage } from "./features/auth/pages/sign-up-page";
 import { ErrorPage } from "./features/error/error-page";
 import { LandingPage } from "./features/landing/landing-page";
+import { OffersCreate } from "./features/offers/pages/offers-create";
 import { OffersPage } from "./features/offers/pages/offers-page";
 import { SupportPage } from "./features/support/pages/support-page";
 import "./index.css";
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
 						element: <SupportPage />,
 					},
 				],
+			},
+			{
+				path: "/offers-create",
+				element: <OffersCreate />,
 			},
 		],
 	},
