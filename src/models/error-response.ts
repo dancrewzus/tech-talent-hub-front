@@ -3,7 +3,7 @@ import { z } from "zod";
 export const ErrorResponse = z.object({
 	statusCode: z.number(),
 	message: z.union([z.string(), z.array(z.string())]),
-	error: z.string(),
+	error: z.string().optional(),
 });
 
 export type ErrorResponseType = z.infer<typeof ErrorResponse>;
