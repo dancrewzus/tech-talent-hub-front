@@ -20,6 +20,8 @@ export function useSession() {
 		if (!response) return currentSession;
 
 		if (response && isErrorResponse(response)) {
+			sessionManager.remove();
+
 			toast({
 				title: "Sesión expirada",
 				description: "Inicie sesión nuevamente para continuar",
