@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { BasePage } from "./components/base-page";
 import { ProtectedRoute } from "./components/protected-route";
 import { Toaster } from "./components/ui/toaster";
+import { ArticlesCreate } from "./features/articles/pages/articles-create";
+import { ArticlesPage } from "./features/articles/pages/articles-page";
 import { LoginPage } from "./features/auth/pages/login-page";
 import { SignUpPage } from "./features/auth/pages/sign-up-page";
 import { ErrorPage } from "./features/error/error-page";
@@ -39,10 +41,18 @@ const router = createBrowserRouter([
 						element: <OffersPage />,
 					},
 					{
+						path: "/articles",
+						element: <ArticlesPage />,
+					},
+					{
 						path: "/support",
 						element: <SupportPage />,
 					},
 				],
+			},
+			{
+				path: "/article-create",
+				element: <ArticlesCreate />,
 			},
 		],
 	},
