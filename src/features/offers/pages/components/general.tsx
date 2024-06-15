@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 export function General() {
 	return (
 		<Main className="flex w-full max-w-sm flex-col space-y-4">
+			<h5>General</h5>
 			{/* Area */}
 			<div className="flex items-center space-x-2">
 				<div className="flex flex-col space-y-2">
