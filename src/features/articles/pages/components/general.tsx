@@ -1,5 +1,6 @@
 import { Main } from "@/components/main";
 import { SelectField } from "@/components/select-field";
+import MyRichTextEditor from "@/components/text-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,8 +40,8 @@ export function General() {
 			</div>
 
 			<div className="flex flex-col space-y-2">
-				<Label>Texto</Label>
-				<Input type="text" />
+				<Label>Content</Label>
+				<MyRichTextEditor></MyRichTextEditor>
 			</div>
 
 			{/* Tags */}
