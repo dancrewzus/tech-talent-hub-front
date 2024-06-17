@@ -1,24 +1,23 @@
 .article-view {
-    @apply px-48 py-8
+	@apply px-48 py-8;
 }
 
 .back-to {
-    @apply text-lg font-medium text-gray-600 hover:text-gray-900;
+	@apply text-lg font-medium text-gray-600 hover:text-gray-900;
 }
 
 .article-title {
-    @apply text-4xl pb-2 pt-5
+	@apply pb-2 pt-5 text-4xl;
 }
 
 .content {
-    @apply flex justify-between font-medium pb-5
+	@apply flex justify-between pb-5 font-medium;
 }
 
 .article-content {
-    @apply  text-justify text-lg pb-5
+	@apply pb-5 text-justify text-lg;
 }
 
 .articleTag {
-    @apply font-bold p-2 rounded mr-2 select-none border-2 border-black rounded-lg;
-
+	@apply mr-2 select-none rounded rounded-lg border-2 border-black p-2 font-bold;
 }

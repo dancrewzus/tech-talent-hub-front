@@ -1,27 +1,27 @@
 .article-card {
-    @apply flex flex-col justify-between bg-white shadow-md rounded-md;
-  }
-  
-  .article-card:hover {
-    @apply shadow-lg;
-  }
-  
-  .article-title {
-    @apply font-medium text-sm
-  }
-  
-  .article-meta {
-    @apply text-sm text-gray-600;
-  }
+	@apply flex flex-col justify-between rounded-md bg-white shadow-md;
+}
 
-  .article-image {
-    @apply w-full h-48 rounded-t-lg;
-  }
+.article-card:hover {
+	@apply shadow-lg;
+}
 
-  .content-inf {
-    @apply flex justify-between p-2
-  }
+.article-title {
+	@apply text-sm font-medium;
+}
 
-  .article-tag {
-    @apply bg-gray-200 p-1 rounded mr-2 select-none font-medium;
-  }
+.article-meta {
+	@apply text-sm text-gray-600;
+}
+
+.article-image {
+	@apply h-48 w-full rounded-t-lg;
+}
+
+.content-inf {
+	@apply flex justify-between p-2;
+}
+
+.article-tag {
+	@apply mr-2 select-none rounded bg-gray-200 p-1 font-medium;
+}
