@@ -1,0 +1,27 @@
+.article-card {
+    @apply flex flex-col justify-between bg-white shadow-md rounded-md;
+  }
+  
+  .article-card:hover {
+    @apply shadow-lg;
+  }
+  
+  .article-title {
+    @apply font-medium text-sm
+  }
+  
+  .article-meta {
+    @apply text-sm text-gray-600;
+  }
+
+  .article-image {
+    @apply w-full h-48 rounded-t-lg;
+  }
+
+  .content-inf {
+    @apply flex justify-between p-2
+  }
+
+  .article-tag {
+    @apply bg-gray-200 p-1 rounded mr-2 select-none font-medium;
+  }

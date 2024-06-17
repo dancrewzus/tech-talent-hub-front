@@ -1,0 +1,24 @@
+.article-view {
+    @apply px-48 py-8
+}
+
+.back-to {
+    @apply text-lg font-medium text-gray-600 hover:text-gray-900;
+}
+
+.article-title {
+    @apply text-4xl pb-2 pt-5
+}
+
+.content {
+    @apply flex justify-between font-medium pb-5
+}
+
+.article-content {
+    @apply  text-justify text-lg pb-5
+}
+
+.articleTag {
+    @apply font-bold p-2 rounded mr-2 select-none border-2 border-black rounded-lg;
+
+}
