@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+
+import { CreateOffer, type CreateOfferType } from "@/models/offer";
 
 import { CheckboxField } from "@/components/checkbox-field";
 import { CountryDropdown } from "@/components/country-dropdown";
@@ -6,33 +9,61 @@ import { CurrencyDropdown } from "@/components/currency-dropdown";
 import { CurrencyInputField } from "@/components/currency-input-field";
 import { SelectField } from "@/components/select-field";
 import { TextField } from "@/components/text-field";
+import { TextareaField } from "@/components/textarea-field";
 import { Button } from "@/components/ui/button";
 
 export function OfferForm() {
-	const [country, setCountry] = useState("");
-	const [currency, setCurrency] = useState("");
+	const {
+		register,
+		control,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<CreateOfferType>({
+		resolver: zodResolver(CreateOffer),
+		defaultValues: {
+			category: "",
+			country: "VEN",
+			currency: "USD",
+			description: "",
+			hiringDate: "",
+			keywords: [],
+			position: "",
+			remote: true,
+			title: "",
+			typeOfContract: "",
+		},
+	});
+
+	// Creates an offer.
+	const onSubmit: SubmitHandler<CreateOfferType> = (offer) => {
+		console.log(offer);
+	};
 
 	return (
-		<form className="space-y-6">
+		<form method="POST" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
 			<div className="space-y-4">
 				<TextField
 					id="title"
 					labelProps={{
 						children: "Título",
 					}}
+					errorMessage={errors.title?.message}
 					inputProps={{
 						placeholder: "ej: Frontend Developer",
+						...register("title"),
 					}}
 				/>
 
-				<TextField
+				<TextareaField
 					id="description"
 					labelProps={{
 						children: "Descripción",
 					}}
-					inputProps={{
+					errorMessage={errors.description?.message}
+					textareaProps={{
 						placeholder:
 							"ej: Requerimos un frontend con habilidades técnicas en...",
+						...register("description"),
 					}}
 				/>
 
@@ -41,35 +72,90 @@ export function OfferForm() {
 					labelProps={{
 						children: "Puesto",
 					}}
+					errorMessage={errors.position?.message}
 					inputProps={{
 						placeholder: "ej: Software Engineer",
+						...register("position"),
 					}}
 				/>
 
-				<div className="flex items-end gap-2">
-					<SelectField
-						id="area"
-						className="w-full"
-						labelProps={{
-							children: "Área",
-						}}
-						options={[]}
-						placeholder="Selecciona un área"
-						selectProps={{}}
-					/>
+				<Controller
+					control={control}
+					name="category"
+					render={({ field, fieldState: { error } }) => {
+						return (
+							<SelectField
+								id="area"
+								className="w-full"
+								labelProps={{
+									children: "Área",
+								}}
+								options={[
+									{
+										label: "Hola",
+										value: "hello",
+									},
+								]}
+								placeholder="Selecciona un área"
+								errorMessage={error?.message}
+								selectProps={{
+									value: field.value,
+									onValueChange: field.onChange,
+								}}
+							/>
+						);
+					}}
+				/>
 
-					<Button type="button" variant="outline">
-						Administrar áreas
-					</Button>
-				</div>
+				<Controller
+					control={control}
+					name="typeOfContract"
+					render={({ field, fieldState: { error } }) => {
+						return (
+							<SelectField
+								id="contract_type"
+								className="w-full"
+								labelProps={{
+									children: "Tipo de contrato",
+								}}
+								errorMessage={error?.message}
+								options={[
+									{
+										label: "Tiempo completo",
+										value: "complete",
+									},
+									{
+										label: "Tiempo parcial",
+										value: "partial",
+									},
+									{
+										label: "Plazo fijo",
+										value: "fixed",
+									},
+									{
+										label: "Freelancer",
+										value: "freelance",
+									},
+								]}
+								placeholder="Selecciona un área"
+								selectProps={{
+									value: field.value,
+									onValueChange: field.onChange,
+								}}
+							/>
+						);
+					}}
+				/>
 
 				<TextField
 					id="keywords"
 					labelProps={{
 						children: "Palabras clave",
 					}}
+					errorMessage={errors.keywords?.message}
 					inputProps={{
 						placeholder: "ej: JavaScript, React, Node.js",
+						...register("keywords"),
 					}}
 				/>
 
@@ -78,44 +164,79 @@ export function OfferForm() {
 					labelProps={{
 						children: "Años de experiencia",
 					}}
+					errorMessage={errors.yearsOfExperience?.message}
 					inputProps={{
 						type: "number",
 						placeholder: "ej: 1",
+						...register("yearsOfExperience"),
 					}}
 				/>
 
-				<CurrencyDropdown
-					id="currency"
-					labelProps={{
-						children: "Moneda",
+				<Controller
+					control={control}
+					name="currency"
+					render={({ field, fieldState: { error } }) => {
+						return (
+							<CurrencyDropdown
+								id="currency"
+								labelProps={{
+									children: "Moneda",
+								}}
+								errorMessage={error?.message}
+								description="Moneda usada para pagar al candidato"
+								value={field.value}
+								onSelect={(value) => field.onChange(value)}
+							/>
+						);
 					}}
-					description="Moneda usada para pagar al candidato"
-					value={currency}
-					onSelect={(value) => setCurrency(value)}
 				/>
 
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-					<CurrencyInputField
-						id="salary_min"
-						labelProps={{
-							children: "Salario mínimo",
-						}}
-						inputProps={{
-							defaultValue: "",
-							decimalsLimit: 2,
-							step: 1,
-							placeholder: "ej: 400",
+					<Controller
+						control={control}
+						name="salaryMin"
+						render={({ field, fieldState: { error } }) => {
+							return (
+								<CurrencyInputField
+									id="salary_min"
+									labelProps={{
+										children: "Salario mínimo",
+									}}
+									errorMessage={error?.message}
+									inputProps={{
+										defaultValue: "",
+										decimalsLimit: 2,
+										step: 1,
+										placeholder: "ej: 400",
+										value: field.value,
+										onValueChange: field.onChange,
+									}}
+								/>
+							);
 						}}
 					/>
 
-					<CurrencyInputField
-						id="salary_max"
-						labelProps={{
-							children: "Salario máximo",
-						}}
-						inputProps={{
-							defaultValue: "",
-							placeholder: "ej: 600",
+					<Controller
+						control={control}
+						name="salaryMax"
+						render={({ field, fieldState: { error } }) => {
+							return (
+								<CurrencyInputField
+									id="salary_max"
+									labelProps={{
+										children: "Salario máximo",
+									}}
+									errorMessage={error?.message}
+									inputProps={{
+										defaultValue: "",
+										decimalsLimit: 2,
+										step: 1,
+										placeholder: "ej: 600",
+										value: field.value,
+										onValueChange: field.onChange,
+									}}
+								/>
+							);
 						}}
 					/>
 				</div>
@@ -125,21 +246,38 @@ export function OfferForm() {
 					labelProps={{
 						children: "Fecha de contratación",
 					}}
+					errorMessage={errors.hiringDate?.message}
 					inputProps={{
 						type: "date",
+						...register("hiringDate"),
 					}}
 				/>
 
-				<CountryDropdown
-					id="country"
+				<Controller
+					control={control}
+					name="country"
+					render={({ field, fieldState: { error } }) => {
+						return (
+							<CountryDropdown
+								id="country"
+								labelProps={{
+									children: "Pais",
+								}}
+								errorMessage={error?.message}
+								value={field.value}
+								onSelect={(value) => field.onChange(value)}
+							/>
+						);
+					}}
+				/>
+
+				<CheckboxField
+					id="remote"
 					labelProps={{
-						children: "Pais",
+						children: "¿Es una oferta en remoto?",
+						...register("remote"),
 					}}
-					value={country}
-					onSelect={(value) => setCountry(value)}
 				/>
-
-				<CheckboxField id="remote" labelProps={{ children: "Remoto" }} />
 			</div>
 
 			<Button type="submit">Crear oferta</Button>
