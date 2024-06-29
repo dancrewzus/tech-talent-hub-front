@@ -1,6 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 
+import { offersApi } from "@/api/offers-api";
+
+import { isErrorResponse } from "@/models/error-response";
 import { CreateOffer, type CreateOfferType } from "@/models/offer";
 
 import { CheckboxField } from "@/components/checkbox-field";
@@ -11,8 +14,11 @@ import { SelectField } from "@/components/select-field";
 import { TextField } from "@/components/text-field";
 import { TextareaField } from "@/components/textarea-field";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 export function OfferForm() {
+	const { toast } = useToast();
+
 	const {
 		register,
 		control,
@@ -35,8 +41,24 @@ export function OfferForm() {
 	});
 
 	// Creates an offer.
-	const onSubmit: SubmitHandler<CreateOfferType> = (offer) => {
-		console.log(offer);
+	const onSubmit: SubmitHandler<CreateOfferType> = async (offer) => {
+		const response = await offersApi.create(offer);
+
+		if (!response || isErrorResponse(response)) {
+			const messages: { [key: number]: string } = {};
+
+			return toast({
+				title: "Ha ocurrido un error",
+				description:
+					response && messages[response.statusCode]
+						? messages[response.statusCode]!
+						: "Intente más tarde",
+			});
+		}
+
+		toast({
+			title: "Oferta publicada",
+		});
 	};
 
 	return (
