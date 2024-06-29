@@ -37,6 +37,7 @@
 		"lucide-react": "^0.376.0",
 		"phone": "^3.1.43",
 		"react": "^18.2.0",
+		"react-currency-input-field": "^3.8.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": "^7.51.4",
 		"react-phone-number-input": "^3.4.1",
