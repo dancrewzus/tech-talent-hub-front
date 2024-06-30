@@ -8,16 +8,20 @@ export function CheckboxField({
 	id,
 	checkboxProps,
 	labelProps,
+	title,
 }: {
 	id: string;
 	checkboxProps?: Omit<CheckboxProps, "id">;
-	labelProps?: Omit<LabelProps, "htmlFor">;
+	labelProps?: Omit<LabelProps, "htmlFor" | "children">;
+	title: string;
 }) {
 	return (
 		<div className="flex items-center space-x-2">
-			<Checkbox id={id} name={id} {...checkboxProps} />
+			<Checkbox id={id} name={id} aria-label={title} {...checkboxProps} />
 
-			<Label htmlFor={id} {...labelProps} />
+			<Label htmlFor={id} {...labelProps}>
+				{title}
+			</Label>
 		</div>
 	);
 }

@@ -3,16 +3,8 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { BasePage } from "./components/base-page";
-import { ProtectedRoute } from "./components/protected-route";
 import { Toaster } from "./components/ui/toaster";
-import { LoginPage } from "./features/auth/pages/login-page";
-import { SignUpPage } from "./features/auth/pages/sign-up-page";
-import { CategoriesPage } from "./features/categories/pages/categories-page";
 import { ErrorPage } from "./features/error/error-page";
-import { LandingPage } from "./features/landing/landing-page";
-import { CreateOfferPage } from "./features/offers/pages/create-offer-page";
-import { OffersPage } from "./features/offers/pages/offers-page";
-import { SupportPage } from "./features/support/pages/support-page";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -22,36 +14,88 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <LandingPage />,
+				async lazy() {
+					const { LandingPage } = await import(
+						"./features/landing/landing-page"
+					);
+
+					return { Component: LandingPage };
+				},
 			},
 			{
 				path: "/sign-up",
-				element: <SignUpPage />,
+				async lazy() {
+					const { SignUpPage } = await import(
+						"./features/auth/pages/sign-up-page"
+					);
+
+					return { Component: SignUpPage };
+				},
 			},
 			{
 				path: "/login",
-				element: <LoginPage />,
-			},
+				async lazy() {
+					const { LoginPage } = await import(
+						"./features/auth/pages/login-page"
+					);
 
+					return { Component: LoginPage };
+				},
+			},
 			{
-				element: <ProtectedRoute />,
+				async lazy() {
+					const { ProtectedRoute } = await import(
+						"./components/protected-route"
+					);
+
+					return { Component: ProtectedRoute };
+				},
+
 				children: [
 					{
 						path: "/offers",
-						element: <OffersPage />,
+						async lazy() {
+							const { OffersPage } = await import(
+								"./features/offers/pages/offers-page"
+							);
+
+							return { Component: OffersPage };
+						},
 					},
 					{
 						path: "/offers/create",
-						element: <CreateOfferPage />,
+						async lazy() {
+							const { CreateOfferPage } = await import(
+								"./features/offers/pages/create-offer-page"
+							);
+
+							return { Component: CreateOfferPage };
+						},
 					},
 					{
 						path: "/categories",
-						element: <CategoriesPage />,
-						loader: CategoriesPage.loader,
+						async lazy() {
+							const { CategoriesPage } = await import(
+								"./features/categories/pages/categories-page"
+							);
+
+							return {
+								Component: CategoriesPage,
+								loader: CategoriesPage.loader,
+							};
+						},
 					},
 					{
 						path: "/support",
-						element: <SupportPage />,
+						async lazy() {
+							const { SupportPage } = await import(
+								"./features/support/pages/support-page"
+							);
+
+							return {
+								Component: SupportPage,
+							};
+						},
 					},
 				],
 			},

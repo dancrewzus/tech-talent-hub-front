@@ -9,25 +9,29 @@ export function Footer() {
 		<footer className="w-full border-t bg-background py-6">
 			<div className="container flex h-full flex-col justify-between gap-6 lg:flex-row lg:items-center">
 				<ul className="flex flex-col items-center gap-4 lg:flex-row">
-					<Dialog>
-						<DialogTrigger asChild>
-							<button className="text-muted-foreground transition-colors hover:text-foreground">
-								Políticas de Privacidad
-							</button>
-						</DialogTrigger>
+					<li>
+						<Dialog>
+							<DialogTrigger asChild>
+								<button className="text-muted-foreground transition-colors hover:text-foreground">
+									Políticas de Privacidad
+								</button>
+							</DialogTrigger>
 
-						<PrivacyPolicyModal />
-					</Dialog>
+							<PrivacyPolicyModal />
+						</Dialog>
+					</li>
 
-					<Dialog>
-						<DialogTrigger asChild>
-							<button className="text-muted-foreground transition-colors hover:text-foreground">
-								Términos de Uso
-							</button>
-						</DialogTrigger>
+					<li>
+						<Dialog>
+							<DialogTrigger asChild>
+								<button className="text-muted-foreground transition-colors hover:text-foreground">
+									Términos de Uso
+								</button>
+							</DialogTrigger>
 
-						<TermsOfUseModal />
-					</Dialog>
+							<TermsOfUseModal />
+						</Dialog>
+					</li>
 				</ul>
 
 				<p className="text-center text-muted-foreground">

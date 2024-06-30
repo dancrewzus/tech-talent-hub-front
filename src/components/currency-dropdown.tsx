@@ -79,6 +79,7 @@ export function CurrencyDropdown({
 						variant="outline"
 						role="combobox"
 						aria-expanded={open}
+						aria-label="Selecciona una moneda"
 						className="w-full justify-between"
 					>
 						{selectedCurrency ? (

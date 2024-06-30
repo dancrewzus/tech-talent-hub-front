@@ -36,7 +36,7 @@ export function SelectField({
 	id,
 	selectProps,
 	labelProps,
-	placeholder,
+	placeholder = "Seleccione una opción",
 	options,
 	errorMessage,
 	scrollAreaProps,
@@ -46,8 +46,8 @@ export function SelectField({
 			<Label htmlFor={id} {...labelProps} />
 
 			<Select name={id} {...selectProps}>
-				<SelectTrigger id={id}>
-					<SelectValue placeholder={placeholder ?? "Seleccione una opción"} />
+				<SelectTrigger id={id} aria-label={placeholder}>
+					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>
 
 				<SelectContent>

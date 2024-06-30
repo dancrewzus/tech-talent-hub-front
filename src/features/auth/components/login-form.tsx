@@ -108,10 +108,7 @@ export function LoginForm() {
 				/>
 
 				<div className="flex justify-between">
-					<CheckboxField
-						id="remember_me"
-						labelProps={{ children: "Recuérdeme" }}
-					/>
+					<CheckboxField id="remember_me" title="Recuérdame" />
 
 					<Button variant="ghost">¿Olvidaste tu contraseña?</Button>
 				</div>

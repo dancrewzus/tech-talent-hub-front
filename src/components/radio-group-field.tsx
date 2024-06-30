@@ -55,7 +55,11 @@ export function RadioGroupField<T extends string>({
 			>
 				{options.map((option) => (
 					<div className="flex items-center space-x-2" key={option.value}>
-						<RadioGroupItem value={option.value} id={option.value} />
+						<RadioGroupItem
+							value={option.value}
+							id={option.value}
+							aria-label={option.label}
+						/>
 
 						<Label htmlFor={option.value}>{option.label}</Label>
 					</div>

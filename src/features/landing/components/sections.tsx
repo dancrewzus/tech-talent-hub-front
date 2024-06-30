@@ -1,6 +1,6 @@
-import magnifyingGlassImage from "@/assets/magnifying_glass.jpeg";
-import mouseImage from "@/assets/mouse.jpeg";
-import stairsImage from "@/assets/stairs.jpeg";
+import magnifyingGlassImage from "@/assets/magnifying_glass.webp";
+import mouseImage from "@/assets/mouse.webp";
+import stairsImage from "@/assets/stairs.webp";
 
 interface Section {
 	title: string;
@@ -51,7 +51,7 @@ function SectionCard({ title, description, image, imageAlt }: Section) {
 			/>
 
 			<div className="space-y-2">
-				<h3 className="text-xl font-medium text-foreground">{title}</h3>
+				<h2 className="text-xl font-medium text-foreground">{title}</h2>
 
 				<p className="text-muted-foreground">{description}</p>
 			</div>

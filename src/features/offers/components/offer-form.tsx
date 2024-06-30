@@ -296,8 +296,8 @@ export function OfferForm() {
 
 				<CheckboxField
 					id="remote"
+					title="¿Es una oferta en remoto?"
 					labelProps={{
-						children: "¿Es una oferta en remoto?",
 						...register("remote"),
 					}}
 				/>

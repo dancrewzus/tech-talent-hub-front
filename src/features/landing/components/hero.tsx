@@ -1,4 +1,4 @@
-import handshakeImage from "@/assets/handshake.jpg";
+import handshakeImage from "@/assets/handshake.webp";
 
 export function Hero() {
 	return (
@@ -16,8 +16,9 @@ export function Hero() {
 			<img
 				src={handshakeImage}
 				height={460}
-				className="aspect-video h-full w-full object-cover"
+				className="aspect-video h-full w-full bg-black/80 object-cover"
 				alt="Dos personas estrechándose las manos"
+				loading="eager"
 			/>
 		</section>
 	);

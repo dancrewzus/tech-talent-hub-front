@@ -84,6 +84,7 @@ export function CountryDropdown({
 						variant="outline"
 						role="combobox"
 						aria-expanded={open}
+						aria-label="Selecciona un pais"
 						className="w-full justify-between"
 					>
 						{selectedCountry ? (

@@ -66,13 +66,14 @@ export function NavBar() {
 								session ? route.isProtected : !route.isProtected,
 							)
 							.map((route) => (
-								<NavLink
-									key={route.to}
-									to={route.to}
-									className="font-medium text-muted-foreground transition-colors hover:text-primary aria-[current=page]:text-primary"
-								>
-									{route.title}
-								</NavLink>
+								<li key={route.to}>
+									<NavLink
+										to={route.to}
+										className="font-medium text-muted-foreground transition-colors hover:text-primary aria-[current=page]:text-primary"
+									>
+										{route.title}
+									</NavLink>
+								</li>
 							))}
 					</ul>
 				) : null}
@@ -83,6 +84,8 @@ export function NavBar() {
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" size="icon">
 									<User className="h-4 w-4" />
+
+									<span className="sr-only">Administrar perfil</span>
 								</Button>
 							</DropdownMenuTrigger>
 
