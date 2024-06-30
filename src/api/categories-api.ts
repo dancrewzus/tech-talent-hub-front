@@ -4,6 +4,7 @@ import {
 	type CreateCategoryType,
 } from "@/models/category";
 import { isErrorResponse } from "@/models/error-response";
+import { type QueryParamsType } from "@/models/query-params";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -35,16 +36,14 @@ export const categoriesApi = {
 	 *
 	 * @returns A promise that resolves with the categories.
 	 */
-	async getAll(query?: {
-		offset: number;
-		limit: number;
-	}): Promise<Array<CategoryType>> {
+	async getAll(query?: QueryParamsType): Promise<Array<CategoryType>> {
 		const response = await client("v1/categories", {
 			method: "GET",
 			searchParams: query
 				? {
 						offset: `${query.offset}`,
 						limit: `${query.limit}`,
+						filter: `${query.filter}`,
 					}
 				: undefined,
 		});

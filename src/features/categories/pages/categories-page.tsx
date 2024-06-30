@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 
-import { CategoryQuery } from "@/models/category-query";
+import { QueryParams } from "@/models/query-params";
 
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
@@ -24,7 +24,7 @@ import { CategoryForm } from "../components/category-form";
 function loader() {
 	const searchParams = new URLSearchParams(window.location.search);
 
-	const query = CategoryQuery.safeParse({
+	const query = QueryParams.safeParse({
 		limit: searchParams.get("limit"),
 		offset: searchParams.get("offset"),
 		query: searchParams.get("query") ?? "",
