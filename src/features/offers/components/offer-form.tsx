@@ -16,7 +16,10 @@ import { TextareaField } from "@/components/textarea-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
+import { useCategories } from "@/hooks/use-categories";
+
 export function OfferForm() {
+	const { categories } = useCategories();
 	const { toast } = useToast();
 
 	const {
@@ -110,15 +113,13 @@ export function OfferForm() {
 								id="area"
 								className="w-full"
 								labelProps={{
-									children: "Área",
+									children: "Categoría",
 								}}
-								options={[
-									{
-										label: "Hola",
-										value: "hello",
-									},
-								]}
-								placeholder="Selecciona un área"
+								options={categories.map((category) => ({
+									label: category.name,
+									value: category._id,
+								}))}
+								placeholder="Selecciona una categoría"
 								errorMessage={error?.message}
 								selectProps={{
 									value: field.value,
@@ -159,7 +160,7 @@ export function OfferForm() {
 										value: "freelance",
 									},
 								]}
-								placeholder="Selecciona un área"
+								placeholder="Selecciona un tipo de contrato"
 								selectProps={{
 									value: field.value,
 									onValueChange: field.onChange,

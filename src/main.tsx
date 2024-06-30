@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./components/protected-route";
 import { Toaster } from "./components/ui/toaster";
 import { LoginPage } from "./features/auth/pages/login-page";
 import { SignUpPage } from "./features/auth/pages/sign-up-page";
+import { CategoriesPage } from "./features/categories/pages/categories-page";
 import { ErrorPage } from "./features/error/error-page";
 import { LandingPage } from "./features/landing/landing-page";
 import { CreateOfferPage } from "./features/offers/pages/create-offer-page";
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
 					{
 						path: "/offers/create",
 						element: <CreateOfferPage />,
+					},
+					{
+						path: "/categories",
+						element: <CategoriesPage />,
+						loader: CategoriesPage.loader,
 					},
 					{
 						path: "/support",

@@ -28,6 +28,11 @@ const routes: Array<{
 		isProtected: true,
 	},
 	{
+		title: "Categorías",
+		to: "/categories",
+		isProtected: true,
+	},
+	{
 		title: "Inicio de Sesión",
 		to: "/login",
 		isProtected: false,
@@ -55,7 +60,7 @@ export function NavBar() {
 				</Link>
 
 				{session ? (
-					<ul className="hidden md:flex md:justify-center md:gap-2">
+					<ul className="hidden md:flex md:justify-center md:gap-4">
 						{routes
 							.filter((route) =>
 								session ? route.isProtected : !route.isProtected,

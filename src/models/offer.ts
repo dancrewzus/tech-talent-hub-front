@@ -21,7 +21,7 @@ export const Offer = z.object({
 		.gt(0, "Debe ser mayor a cero"),
 	currency: z.string().min(1, "Debe seleccionar la moneda"),
 	country: z.string().min(1, "Debe seleccionar un pais"),
-	category: z.string().min(1, "Debe seleccionar un área"),
+	category: z.string().min(1, "Debe seleccionar una categoría"),
 	remote: z.boolean().default(false),
 });
 
