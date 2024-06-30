@@ -35,10 +35,10 @@ export function SignUpForm() {
 			address: "",
 			birthDate: "",
 			email: "",
-			firstName: "",
+			name: "",
 			gender: "male",
 			password: "",
-			paternalSurname: "",
+			surname: "",
 			profilePicture: "",
 			phoneNumber: "",
 			role: "",
@@ -136,9 +136,9 @@ export function SignUpForm() {
 						placeholder: "ej: John",
 						autoComplete: "given-name",
 						type: "text",
-						...register("firstName"),
+						...register("name"),
 					}}
-					errorMessage={errors.firstName?.message}
+					errorMessage={errors.name?.message}
 				/>
 
 				<TextField
@@ -150,9 +150,9 @@ export function SignUpForm() {
 						placeholder: "ej: Doe",
 						autoComplete: "family-name",
 						type: "text",
-						...register("paternalSurname"),
+						...register("surname"),
 					}}
-					errorMessage={errors.paternalSurname?.message}
+					errorMessage={errors.surname?.message}
 				/>
 
 				<TextField
