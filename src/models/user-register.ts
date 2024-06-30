@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import { phone } from "phone";
 import { z } from "zod";
 
+import { toBase64 } from "@/lib/utils";
+
 export const UserRegister = z.object({
 	email: z
 		.string()
@@ -25,12 +27,12 @@ export const UserRegister = z.object({
 			(value) => /[0-9]{1,}/.test(value),
 			"Debe contener al menos un número",
 		),
-	firstName: z
+	name: z
 		.string()
 		.min(1, "Debe ingresar un nombre")
 		.min(2, "Debe ingresar un nombre mayor o igual a 2 caracteres")
 		.max(50, "Debe ingresar un nombre menor o igual a 50 caracteres"),
-	paternalSurname: z
+	surname: z
 		.string()
 		.min(1, "Debe ingresar un apellido")
 		.min(2, "Debe ingresar un apellido mayor o igual a 2 caracteres")
@@ -50,7 +52,15 @@ export const UserRegister = z.object({
 		.refine((value) => phone(value).isValid, {
 			message: "Debe ingresar un télefono válido",
 		}),
-	profilePicture: z.string().default(""),
+	profilePicture: z.preprocess((value) => {
+		if (!(value instanceof FileList)) return "";
+
+		const file = value.item(0);
+		if (!file) return "";
+
+		// Convert to Base64.
+		return toBase64(file);
+	}, z.string()),
 	role: z.string().default(""),
 });
 
