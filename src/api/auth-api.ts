@@ -41,7 +41,7 @@ export const authApi = {
 	 * Otherwise an error response or null.
 	 */
 	async register(user: UserRegisterType) {
-		const response = await client("v1/auth/register", {
+		const response = await client("v1/users", {
 			method: "POST",
 			body: user,
 		});

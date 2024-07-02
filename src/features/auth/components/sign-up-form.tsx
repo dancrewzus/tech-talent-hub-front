@@ -54,10 +54,7 @@ export function SignUpForm() {
 	}
 
 	const onSubmit: SubmitHandler<UserRegisterType> = async (user) => {
-		const response = await authApi.register({
-			...user,
-			role: "6642953aa0b93451d98a9f61",
-		});
+		const response = await authApi.register(user);
 
 		if (response === null || isErrorResponse(response)) {
 			const messages: { [key: number]: string } = {

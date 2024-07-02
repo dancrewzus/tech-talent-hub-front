@@ -6,10 +6,8 @@ export const User = z.object({
 	fullname: z.string(),
 	name: z.string(),
 	surname: z.string(),
-	gender: z.enum(["male", "female"]),
 	phoneNumber: z.string(),
 	profilePicture: z.string().default(""),
-	isLogged: z.boolean().default(true),
 	role: z.string().default(""),
 });
 
