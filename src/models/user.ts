@@ -6,9 +6,11 @@ export const User = z.object({
 	fullname: z.string(),
 	name: z.string(),
 	surname: z.string(),
-	phoneNumber: z.string(),
 	profilePicture: z.string().default(""),
-	role: z.string().default(""),
+	phoneNumber: z.string(),
+	role: z.enum(["root", "admin", "client"]).default("client"),
+	gender: z.enum(["male", "female"]).default("male"),
+	isLogged: z.boolean().default(false),
 });
 
 export type UserType = z.infer<typeof User>;

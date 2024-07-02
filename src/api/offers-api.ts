@@ -7,11 +7,11 @@ import { createApiResponseSchema } from "./utils";
 
 export const offersApi = {
 	/**
-	 * Attempts to log an user into the hub.
+	 * Creates an offer.
 	 *
-	 * @param userCredentials - The user credentials to log in.
+	 * @param offer - The offer to create.
 	 *
-	 * @returns A promise that resolves to a session if login is successful.
+	 * @returns A promise that resolves to an offer if successful.
 	 * Otherwise an error response or null.
 	 */
 	async create(offer: CreateOfferType) {
@@ -26,11 +26,47 @@ export const offersApi = {
 		return parsed.success ? parsed.data : null;
 	},
 	/**
-	 * Returns the categories.
+	 * Updates an offer.
 	 *
-	 * @param query - The category query params.
+	 * @param offer - The offer to update.
 	 *
-	 * @returns A promise that resolves with the categories.
+	 * @returns A promise that resolves to an offer if successful.
+	 * Otherwise an error response or null.
+	 */
+	async update({ slug, ...offer }: CreateOfferType) {
+		const response = await client(`v1/offers/${slug}`, {
+			method: "PATCH",
+			body: offer,
+		});
+
+		const json = await response?.json();
+		const parsed = createApiResponseSchema(Offer).safeParse(json);
+
+		return parsed.success ? parsed.data : null;
+	},
+	/**
+	 * Deletes the offer.
+	 *
+	 * @param offerSlug - The offer slug to delete.
+	 *
+	 * @returns A promise that resolves with a boolean indicating the status.
+	 */
+	async delete(offerSlug: string) {
+		const response = await client(`v1/offers/${offerSlug}`, {
+			method: "DELETE",
+		});
+
+		const json = await response?.json();
+		const parsed = createApiResponseSchema(Offer).safeParse(json);
+
+		return parsed.success ? parsed.data : null;
+	},
+	/**
+	 * Returns the offers.
+	 *
+	 * @param query - The offers query params.
+	 *
+	 * @returns A promise that resolves with the offers.
 	 */
 	async getAll(query?: QueryParamsType): Promise<Array<OfferType>> {
 		const response = await client("v1/offers", {
