@@ -4,14 +4,18 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 
 import { categoriesApi } from "@/api/categories-api";
 
-import { CreateCategory, type CreateCategoryType } from "@/models/category";
+import {
+	type CategoryType,
+	CreateCategory,
+	type CreateCategoryType,
+} from "@/models/category";
 import { isErrorResponse } from "@/models/error-response";
 
 import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-export function CategoryForm() {
+export function CategoryForm({ category }: { category?: CategoryType } = {}) {
 	const { toast } = useToast();
 
 	const {
@@ -21,13 +25,18 @@ export function CategoryForm() {
 	} = useForm<CreateCategoryType>({
 		resolver: zodResolver(CreateCategory),
 		values: {
-			name: "",
+			name: category?.name ?? "",
 		},
 	});
 
 	// Create a category.
-	const onSubmit: SubmitHandler<CreateCategoryType> = async (category) => {
-		const response = await categoriesApi.create(category);
+	const onSubmit: SubmitHandler<CreateCategoryType> = async (values) => {
+		const response = category
+			? await categoriesApi.update({
+					...category,
+					name: values.name,
+				})
+			: await categoriesApi.create(values);
 
 		if (!response || isErrorResponse(response)) {
 			const messages: { [key: number]: string } = {};
