@@ -2,15 +2,14 @@ import useSWR from "swr";
 
 import { offersApi } from "@/api/offers-api";
 
-import { type QueryParamsType } from "@/models/query-params";
+import { type PaginationType } from "@/models/pagination";
 
-export function useOffers(params?: QueryParamsType) {
-	const { data = [], isLoading } = useSWR("offers", () =>
-		offersApi.getAll(params),
-	);
+export function useOffers(params?: PaginationType) {
+	const { data, isLoading } = useSWR("offers", () => offersApi.getAll(params));
 
 	return {
-		offers: data,
+		offers: data?.data.offers ?? [],
+		pagination: data?.data.pagination,
 		isLoading,
 	};
 }

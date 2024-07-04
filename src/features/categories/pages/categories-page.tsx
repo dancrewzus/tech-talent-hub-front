@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 
-import { QueryParams } from "@/models/query-params";
+import { Pagination } from "@/models/pagination";
 
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
@@ -19,16 +19,20 @@ import { useCategories } from "@/hooks/use-categories";
 import { CategoryForm } from "../components/category-form";
 
 /**
- * Returns the category query paramaters.
+ * Returns the category pagination paramaters.
  */
 function loader() {
 	const searchParams = new URLSearchParams(window.location.search);
 
-	const query = QueryParams.safeParse({
-		limit: searchParams.get("limit"),
-		offset: searchParams.get("offset"),
-		query: searchParams.get("query") ?? "",
-	}).data;
+	let json;
+
+	try {
+		json = JSON.parse(searchParams.get("pagination") ?? "");
+	} catch (_) {
+		json = {};
+	}
+
+	const query = Pagination.safeParse(json).data;
 
 	return { query };
 }

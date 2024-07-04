@@ -1,10 +1,11 @@
 import {
+	CategoriesResponse,
 	Category,
 	type CategoryType,
 	type CreateCategoryType,
 } from "@/models/category";
 import { isErrorResponse } from "@/models/error-response";
-import { type QueryParamsType } from "@/models/query-params";
+import { type PaginationType } from "@/models/pagination";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -65,26 +66,24 @@ export const categoriesApi = {
 	/**
 	 * Returns the categories.
 	 *
-	 * @param query - The category query params.
+	 * @param pagination - The pagination params.
 	 *
 	 * @returns A promise that resolves with the categories.
 	 */
-	async getAll(query?: QueryParamsType): Promise<Array<CategoryType>> {
+	async getAll(pagination?: PaginationType) {
 		const response = await client("v1/categories", {
 			method: "GET",
-			searchParams: query
+			searchParams: pagination
 				? {
-						offset: `${query.offset}`,
-						limit: `${query.limit}`,
-						filter: `${query.filter}`,
+						pagination: JSON.stringify(pagination),
 					}
 				: undefined,
 		});
 
 		const json = await response?.json();
-		const parsed = createApiResponseSchema(Category.array()).safeParse(json);
+		const parsed = createApiResponseSchema(CategoriesResponse).safeParse(json);
 
-		if (!parsed.success || isErrorResponse(parsed.data)) return [];
+		if (!parsed.success || isErrorResponse(parsed.data)) return null;
 
 		return parsed.data;
 	},

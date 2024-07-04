@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+import { DataPagination } from "./data-pagination";
+
+/**
+ * A job offer.
+ */
 export const Offer = z.object({
 	title: z.string().min(1, "Debe ingresar el titulo"),
 	slug: z.string().default(""),
@@ -25,6 +30,11 @@ export const Offer = z.object({
 	remote: z.boolean().default(false),
 });
 
+export type OfferType = z.infer<typeof Offer>;
+
+/**
+ * The create offer model.
+ */
 export const CreateOffer = Offer.extend({
 	keywords: z.preprocess(
 		(value) => {
@@ -44,6 +54,16 @@ export const CreateOffer = Offer.extend({
 	},
 );
 
-export type OfferType = z.infer<typeof Offer>;
-
 export type CreateOfferType = z.infer<typeof CreateOffer>;
+
+/**
+ * The offers response.
+ */
+export const OffersResponse = z.object({
+	data: z.object({
+		pagination: DataPagination,
+		offers: Offer.array(),
+	}),
+});
+
+export type OffersResponseType = z.infer<typeof OffersResponse>;
