@@ -1,6 +1,6 @@
 import { isErrorResponse } from "@/models/error-response";
-import { type CreateOfferType, Offer, type OfferType } from "@/models/offer";
-import { type QueryParamsType } from "@/models/query-params";
+import { type CreateOfferType, Offer, OffersResponse } from "@/models/offer";
+import { type PaginationType } from "@/models/pagination";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -64,26 +64,24 @@ export const offersApi = {
 	/**
 	 * Returns the offers.
 	 *
-	 * @param query - The offers query params.
+	 * @param pagination - The pagination params.
 	 *
 	 * @returns A promise that resolves with the offers.
 	 */
-	async getAll(query?: QueryParamsType): Promise<Array<OfferType>> {
+	async getAll(pagination?: PaginationType) {
 		const response = await client("v1/offers", {
 			method: "GET",
-			searchParams: query
+			searchParams: pagination
 				? {
-						offset: `${query.offset}`,
-						limit: `${query.limit}`,
-						filter: `${query.filter}`,
+						pagination: JSON.stringify(pagination),
 					}
 				: undefined,
 		});
 
 		const json = await response?.json();
-		const parsed = createApiResponseSchema(Offer.array()).safeParse(json);
+		const parsed = createApiResponseSchema(OffersResponse).safeParse(json);
 
-		if (!parsed.success || isErrorResponse(parsed.data)) return [];
+		if (!parsed.success || isErrorResponse(parsed.data)) return null;
 
 		return parsed.data;
 	},

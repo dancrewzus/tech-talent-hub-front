@@ -12,7 +12,8 @@ export function useCategories() {
 	};
 
 	return {
-		categories: data,
+		categories: data?.data.categories ?? [],
+		pagination: data?.data.pagination,
 		isLoading,
 		refetchCategories,
 	};
