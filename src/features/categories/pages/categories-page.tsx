@@ -1,7 +1,3 @@
-import { useLoaderData } from "react-router-dom";
-
-import { QueryParams } from "@/models/query-params";
-
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@/components/ui/button";
@@ -17,26 +13,15 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 
 import { CategoryForm } from "../components/category-form";
-
-/**
- * Returns the category query paramaters.
- */
-function loader() {
-	const searchParams = new URLSearchParams(window.location.search);
-
-	const query = QueryParams.safeParse({
-		limit: searchParams.get("limit"),
-		offset: searchParams.get("offset"),
-		query: searchParams.get("query") ?? "",
-	}).data;
-
-	return { query };
-}
+import CategoryTable from "../components/category-table";
 
 export function CategoriesPage() {
-	const { query } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-	const { categories } = useCategories(query);
+	const { categories } = useCategories();
 
+	console.log(categories);
+	if (!categories) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<Main className="container space-y-6 py-8">
 			<SectionHeader
@@ -61,10 +46,7 @@ export function CategoriesPage() {
 					</Dialog>
 				}
 			/>
-
-			<pre>{JSON.stringify(categories, null, 2)}</pre>
+			<CategoryTable data={categories?.data} />
 		</Main>
 	);
 }
-
-CategoriesPage.loader = loader;

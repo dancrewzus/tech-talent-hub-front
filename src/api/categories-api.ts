@@ -1,6 +1,8 @@
 import {
 	Category,
+	CategoryResponseSchema,
 	type CategoryType,
+	type CategoryResponse,
 	type CreateCategoryType,
 } from "@/models/category";
 import { isErrorResponse } from "@/models/error-response";
@@ -69,23 +71,64 @@ export const categoriesApi = {
 	 *
 	 * @returns A promise that resolves with the categories.
 	 */
-	async getAll(query?: QueryParamsType): Promise<Array<CategoryType>> {
-		const response = await client("v1/categories", {
-			method: "GET",
-			searchParams: query
-				? {
-						offset: `${query.offset}`,
-						limit: `${query.limit}`,
-						filter: `${query.filter}`,
-					}
-				: undefined,
-		});
+	async getAll(query?: QueryParamsType): Promise<CategoryResponse> {
+		try {
+			const response = await client("v1/categories", {
+				method: "GET",
+				searchParams: query
+					? {
+							offset: `${query.offset}`,
+							limit: `${query.limit}`,
+							filter: `${query.filter}`,
+						}
+					: undefined,
+			});
 
-		const json = await response?.json();
-		const parsed = createApiResponseSchema(Category.array()).safeParse(json);
+			const json = await response.json();
+			const parsed = CategoryResponseSchema.safeParse(json);
 
-		if (!parsed.success || isErrorResponse(parsed.data)) return [];
+			if (!parsed.success || isErrorResponse(parsed.data)) {
+				return [];
+			}
 
-		return parsed.data;
+			return parsed.data;
+		} catch (error) {
+			console.error("Error in getAll:", error);
+			throw error;
+		}
+	},
+	/**
+	 * Returns all the categories.
+	 *
+	 * @returns A promise that resolves with all the categories.
+	 */
+	async getAllData(): Promise<CategoryResponse> {
+		let offset = 1;
+		const limit = 100;
+		let hasMoreData = true;
+		const allData: CategoryResponse = {
+			data: {
+				categories: [],
+				pagination: { totalDocs: 0, totalPages: 0, page: 1, limit: 0 },
+			},
+		};
+
+		while (hasMoreData) {
+			const response = await this.getAll({ filter: "", offset, limit });
+
+			allData.data.categories = [
+				...allData.data.categories,
+				...response.data.categories,
+			];
+			allData.data.pagination = response.data.pagination;
+
+			if (response.data.categories.length < limit) {
+				hasMoreData = false;
+			} else {
+				offset += limit;
+			}
+		}
+
+		return allData;
 	},
 };

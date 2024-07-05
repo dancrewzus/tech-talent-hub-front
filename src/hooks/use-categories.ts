@@ -2,11 +2,9 @@ import useSWR from "swr";
 
 import { categoriesApi } from "@/api/categories-api";
 
-import { type QueryParamsType } from "@/models/query-params";
-
-export function useCategories(params?: QueryParamsType) {
-	const { data = [], isLoading } = useSWR("categories", () =>
-		categoriesApi.getAll(params),
+export function useCategories() {
+	const { data, isLoading } = useSWR("categories", () =>
+		categoriesApi.getAllData(),
 	);
 
 	return {
