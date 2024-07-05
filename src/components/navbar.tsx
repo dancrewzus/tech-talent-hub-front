@@ -1,4 +1,4 @@
-import { LifeBuoy, LogOut, User } from "lucide-react";
+import { LifeBuoy, LogOut, User, Bell } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
 import { useSession } from "@/hooks/use-session";
@@ -118,6 +118,29 @@ export function NavBar() {
 							<Button asChild>
 								<Link to="/sign-up">Registrarse</Link>
 							</Button>
+							{/* Este es el codigo del front end de notificaciones*/}
+							{/* TODO: Colocar el codigo dentro del navbar del usuario logeado*/}
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="ghost" size="icon">
+										<Bell className="h-4 w-4" />
+									</Button>
+								</DropdownMenuTrigger>
+
+								<DropdownMenuContent className="w-56">
+									<DropdownMenuSeparator />
+
+									<DropdownMenuGroup>
+										{/*TODO: Agregar el recibimiento de notificaciones por parte del backend*/}
+										<DropdownMenuItem>
+											<span>Notificacion 1</span>
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<span>Notificacion 2</span>
+										</DropdownMenuItem>
+									</DropdownMenuGroup>
+								</DropdownMenuContent>
+							</DropdownMenu>
 						</div>
 					)}
 
