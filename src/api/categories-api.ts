@@ -1,4 +1,5 @@
 import {
+	CategoriesResponse,
 	Category,
 	CategoryResponseSchema,
 	type CategoryType,
@@ -6,7 +7,7 @@ import {
 	type CreateCategoryType,
 } from "@/models/category";
 import { isErrorResponse } from "@/models/error-response";
-import { type QueryParamsType } from "@/models/query-params";
+import { type PaginationType } from "@/models/pagination";
 
 import { client } from "./client";
 import { createApiResponseSchema } from "./utils";
@@ -67,7 +68,7 @@ export const categoriesApi = {
 	/**
 	 * Returns the categories.
 	 *
-	 * @param query - The category query params.
+	 * @param pagination - The pagination params.
 	 *
 	 * @returns A promise that resolves with the categories.
 	 */
@@ -128,7 +129,6 @@ export const categoriesApi = {
 				offset += limit;
 			}
 		}
-
 		return allData;
 	},
 };
