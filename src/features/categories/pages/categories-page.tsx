@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@/components/ui/button";
@@ -16,9 +18,13 @@ import { CategoryForm } from "../components/category-form";
 import CategoryTable from "../components/category-table";
 
 export function CategoriesPage() {
-	const { categories } = useCategories();
+	const { categories: initialCategories, refetchCategories } = useCategories();
+	const [categories, setCategories] = useState(initialCategories);
 
-	console.log(categories);
+	useEffect(() => {
+		setCategories(initialCategories);
+	}, [initialCategories]);
+
 	if (!categories) {
 		return <div>Loading...</div>;
 	}
@@ -41,7 +47,7 @@ export function CategoriesPage() {
 								</DialogDescription>
 							</DialogHeader>
 
-							<CategoryForm />
+							<CategoryForm onCategoryCreated={refetchCategories} />
 						</DialogContent>
 					</Dialog>
 				}
