@@ -15,7 +15,15 @@ import { TextField } from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-export function CategoryForm({ category }: { category?: CategoryType } = {}) {
+interface CategoryFormProps {
+	category?: CategoryType;
+	onCategoryCreated: () => void;
+}
+
+export function CategoryForm({
+	category,
+	onCategoryCreated,
+}: CategoryFormProps) {
 	const { toast } = useToast();
 
 	const {
@@ -53,6 +61,8 @@ export function CategoryForm({ category }: { category?: CategoryType } = {}) {
 		toast({
 			title: "Categoría creada",
 		});
+
+		onCategoryCreated();
 	};
 
 	return (

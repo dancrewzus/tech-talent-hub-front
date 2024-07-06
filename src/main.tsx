@@ -81,7 +81,6 @@ const router = createBrowserRouter([
 
 							return {
 								Component: CategoriesPage,
-								loader: CategoriesPage.loader,
 							};
 						},
 					},

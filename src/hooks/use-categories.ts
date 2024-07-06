@@ -1,17 +1,20 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import { categoriesApi } from "@/api/categories-api";
 
-import { type PaginationType } from "@/models/pagination";
-
-export function useCategories(params?: PaginationType) {
+export function useCategories() {
 	const { data, isLoading } = useSWR("categories", () =>
-		categoriesApi.getAll(params),
+		categoriesApi.getAllData(),
 	);
+
+	const refetchCategories = () => {
+		mutate("categories");
+	};
 
 	return {
 		categories: data?.data.categories ?? [],
 		pagination: data?.data.pagination,
 		isLoading,
+		refetchCategories,
 	};
 }

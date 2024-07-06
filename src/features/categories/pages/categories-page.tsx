@@ -1,6 +1,4 @@
-import { useLoaderData } from "react-router-dom";
-
-import { Pagination } from "@/models/pagination";
+import { useState, useEffect } from "react";
 
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
@@ -17,30 +15,19 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 
 import { CategoryForm } from "../components/category-form";
-
-/**
- * Returns the category pagination paramaters.
- */
-function loader() {
-	const searchParams = new URLSearchParams(window.location.search);
-
-	let json;
-
-	try {
-		json = JSON.parse(searchParams.get("pagination") ?? "");
-	} catch (_) {
-		json = {};
-	}
-
-	const query = Pagination.safeParse(json).data;
-
-	return { query };
-}
+import CategoryTable from "../components/category-table";
 
 export function CategoriesPage() {
-	const { query } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
-	const { categories } = useCategories(query);
+	const { categories: initialCategories, refetchCategories } = useCategories();
+	const [categories, setCategories] = useState(initialCategories);
 
+	useEffect(() => {
+		setCategories(initialCategories);
+	}, [initialCategories]);
+
+	if (!categories) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<Main className="container space-y-6 py-8">
 			<SectionHeader
@@ -60,15 +47,12 @@ export function CategoriesPage() {
 								</DialogDescription>
 							</DialogHeader>
 
-							<CategoryForm />
+							<CategoryForm onCategoryCreated={refetchCategories} />
 						</DialogContent>
 					</Dialog>
 				}
 			/>
-
-			<pre>{JSON.stringify(categories, null, 2)}</pre>
+			<CategoryTable data={categories?.data} />
 		</Main>
 	);
 }
-
-CategoriesPage.loader = loader;
