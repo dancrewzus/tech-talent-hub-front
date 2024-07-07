@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
+
+import type { CategoryType } from "@/models/category";
 
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
+import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import {
 	Dialog,
 	DialogContent,
@@ -15,19 +19,33 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 
 import { CategoryForm } from "../components/category-form";
-import CategoryTable from "../components/category-table";
+
+/** The category table columns */
+const columns: Array<ColumnDef<CategoryType>> = [
+	{
+		accessorKey: "_id",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="ID" />
+		),
+		cell: ({ row }) => row.getValue("_id"),
+		enableSorting: false,
+		enableHiding: false,
+		size: 110,
+	},
+	{
+		accessorKey: "name",
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="Nombre" />
+		),
+		cell: ({ row }) => <div>{row.getValue("name")}</div>,
+		enableSorting: false,
+		enableHiding: false,
+	},
+];
 
 export function CategoriesPage() {
-	const { categories: initialCategories, refetchCategories } = useCategories();
-	const [categories, setCategories] = useState(initialCategories);
+	const { categories, refetchCategories } = useCategories();
 
-	useEffect(() => {
-		setCategories(initialCategories);
-	}, [initialCategories]);
-
-	if (!categories) {
-		return <div>Loading...</div>;
-	}
 	return (
 		<Main className="container space-y-6 py-8">
 			<SectionHeader
@@ -52,7 +70,8 @@ export function CategoriesPage() {
 					</Dialog>
 				}
 			/>
-			<CategoryTable data={categories?.data} />
+
+			<DataTable columns={columns} data={categories} />
 		</Main>
 	);
 }

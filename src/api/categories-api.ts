@@ -1,5 +1,4 @@
 import {
-	CategoriesResponse,
 	Category,
 	CategoryResponseSchema,
 	type CategoryType,
@@ -72,30 +71,27 @@ export const categoriesApi = {
 	 *
 	 * @returns A promise that resolves with the categories.
 	 */
-	async getAll(query?: QueryParamsType): Promise<CategoryResponse> {
-		try {
-			const response = await client("v1/categories", {
-				method: "GET",
-				searchParams: query
-					? {
-							offset: `${query.offset}`,
-							limit: `${query.limit}`,
-							filter: `${query.filter}`,
-						}
-					: undefined,
-			});
+	async getAll(pagination?: PaginationType): Promise<CategoryResponse | null> {
+		const response = await client("v1/categories", {
+			method: "GET",
+			searchParams: pagination
+				? {
+						// pagination: JSON.stringify(pagination),
+					}
+				: undefined,
+		});
 
-			const json = await response.json();
+		try {
+			const json = await response?.json();
 			const parsed = CategoryResponseSchema.safeParse(json);
 
 			if (!parsed.success || isErrorResponse(parsed.data)) {
-				return [];
+				return null;
 			}
 
 			return parsed.data;
 		} catch (error) {
-			console.error("Error in getAll:", error);
-			throw error;
+			return null;
 		}
 	},
 	/**
@@ -104,23 +100,37 @@ export const categoriesApi = {
 	 * @returns A promise that resolves with all the categories.
 	 */
 	async getAllData(): Promise<CategoryResponse> {
-		let offset = 1;
+		let offset = 0;
 		const limit = 100;
 		let hasMoreData = true;
+
 		const allData: CategoryResponse = {
 			data: {
 				categories: [],
-				pagination: { totalDocs: 0, totalPages: 0, page: 1, limit: 0 },
+				pagination: {
+					totalDocs: 0,
+					totalPages: 0,
+					page: 1,
+					limit: 0,
+					hasNextPage: false,
+					hasPrevPage: false,
+					nextPage: null,
+					offset,
+					pagingCounter: 0,
+					prevPage: null,
+				},
 			},
 		};
 
 		while (hasMoreData) {
 			const response = await this.getAll({ filter: "", offset, limit });
+			if (!response) break;
 
 			allData.data.categories = [
 				...allData.data.categories,
 				...response.data.categories,
 			];
+
 			allData.data.pagination = response.data.pagination;
 
 			if (response.data.categories.length < limit) {
@@ -129,6 +139,7 @@ export const categoriesApi = {
 				offset += limit;
 			}
 		}
+
 		return allData;
 	},
 };
