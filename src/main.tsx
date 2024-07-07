@@ -63,6 +63,16 @@ const router = createBrowserRouter([
 						},
 					},
 					{
+						path: "/offers/:slug",
+						async lazy() {
+							const { OfferPage } = await import(
+								"./features/offers/pages/offer-page"
+							);
+
+							return { Component: OfferPage };
+						},
+					},
+					{
 						path: "/offers/create",
 						async lazy() {
 							const { CreateOfferPage } = await import(
@@ -73,7 +83,7 @@ const router = createBrowserRouter([
 						},
 					},
 					{
-						path: "/offers/edit/:id",
+						path: "/offers/:slug/edit",
 						async lazy() {
 							const { EditOfferPage } = await import(
 								"./features/offers/pages/edit-offer-page"
