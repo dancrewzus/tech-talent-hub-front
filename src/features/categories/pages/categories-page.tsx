@@ -1,12 +1,7 @@
-import type { ColumnDef } from "@tanstack/react-table";
-
-import type { CategoryType } from "@/models/category";
-
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
-import { DataTableColumnHeader } from "@/components/ui/data-table-column-header";
 import {
 	Dialog,
 	DialogContent,
@@ -19,29 +14,7 @@ import {
 import { useCategories } from "@/hooks/use-categories";
 
 import { CategoryForm } from "../components/category-form";
-
-/** The category table columns */
-const columns: Array<ColumnDef<CategoryType>> = [
-	{
-		accessorKey: "_id",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="ID" />
-		),
-		cell: ({ row }) => row.getValue("_id"),
-		enableSorting: false,
-		enableHiding: false,
-		size: 110,
-	},
-	{
-		accessorKey: "name",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Nombre" />
-		),
-		cell: ({ row }) => <div>{row.getValue("name")}</div>,
-		enableSorting: false,
-		enableHiding: false,
-	},
-];
+import { columns } from "../components/columns";
 
 export function CategoriesPage() {
 	const { categories, refetchCategories } = useCategories();

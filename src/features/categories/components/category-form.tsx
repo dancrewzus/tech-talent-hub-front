@@ -59,7 +59,7 @@ export function CategoryForm({
 		}
 
 		toast({
-			title: "Categoría creada",
+			title: category ? "Categoria actualizada" : "Categoría creada",
 		});
 
 		onCategoryCreated();
@@ -84,7 +84,7 @@ export function CategoryForm({
 					<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 				) : null}
 
-				<span>Crear categoría</span>
+				<span>{category ? "Editar categoría" : "Crear categoría"}</span>
 			</Button>
 		</form>
 	);
