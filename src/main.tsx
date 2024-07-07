@@ -73,6 +73,16 @@ const router = createBrowserRouter([
 						},
 					},
 					{
+						path: "/offers/edit/:id",
+						async lazy() {
+							const { EditOfferPage } = await import(
+								"./features/offers/pages/edit-offer-page"
+							);
+
+							return { Component: EditOfferPage };
+						},
+					},
+					{
 						path: "/categories",
 						async lazy() {
 							const { CategoriesPage } = await import(

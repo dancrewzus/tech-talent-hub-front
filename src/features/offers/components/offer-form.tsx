@@ -4,7 +4,11 @@ import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { offersApi } from "@/api/offers-api";
 
 import { isErrorResponse } from "@/models/error-response";
-import { CreateOffer, type CreateOfferType } from "@/models/offer";
+import {
+	CreateOffer,
+	type OfferType,
+	type CreateOfferType,
+} from "@/models/offer";
 
 import { CheckboxField } from "@/components/checkbox-field";
 import { CountryDropdown } from "@/components/country-dropdown";
@@ -18,7 +22,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useCategories } from "@/hooks/use-categories";
 
-export function OfferForm() {
+export function OfferForm({ offer }: { offer?: OfferType }) {
 	const { categories } = useCategories();
 	const { toast } = useToast();
 
@@ -29,7 +33,7 @@ export function OfferForm() {
 		formState: { errors },
 	} = useForm<CreateOfferType>({
 		resolver: zodResolver(CreateOffer),
-		defaultValues: {
+		defaultValues: offer ?? {
 			category: "",
 			country: "VEN",
 			currency: "USD",
@@ -37,15 +41,20 @@ export function OfferForm() {
 			hiringDate: "",
 			keywords: [],
 			position: "",
-			remote: true,
+			remote: false,
 			title: "",
 			typeOfContract: "",
 		},
 	});
 
-	// Creates an offer.
-	const onSubmit: SubmitHandler<CreateOfferType> = async (offer) => {
-		const response = await offersApi.create(offer);
+	// Creates or updates an offer.
+	const onSubmit: SubmitHandler<CreateOfferType> = async (values) => {
+		const response = offer
+			? await offersApi.update({
+					...values,
+					slug: offer.slug,
+				})
+			: await offersApi.create(values);
 
 		if (!response || isErrorResponse(response)) {
 			const messages: { [key: number]: string } = {};
@@ -60,7 +69,7 @@ export function OfferForm() {
 		}
 
 		toast({
-			title: "Oferta publicada",
+			title: offer ? "Oferta actualizada" : "Oferta publicada",
 		});
 	};
 
@@ -294,16 +303,27 @@ export function OfferForm() {
 					}}
 				/>
 
-				<CheckboxField
-					id="remote"
-					title="¿Es una oferta en remoto?"
-					labelProps={{
-						...register("remote"),
+				<Controller
+					control={control}
+					name="remote"
+					render={({ field }) => {
+						return (
+							<CheckboxField
+								id="remote"
+								title="¿Es una oferta en remoto?"
+								checkboxProps={{
+									checked: field.value,
+									onCheckedChange(checked) {
+										field.onChange(typeof checked === "boolean" && checked);
+									},
+								}}
+							/>
+						);
 					}}
 				/>
 			</div>
 
-			<Button type="submit">Crear oferta</Button>
+			<Button type="submit">{offer ? "Editar oferta" : "Crear oferta"}</Button>
 		</form>
 	);
 }
