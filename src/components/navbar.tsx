@@ -85,44 +85,7 @@ export function NavBar() {
 
 				<div className="flex gap-2 md:justify-end">
 					{session ? (
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="ghost" size="icon">
-									<User className="h-4 w-4" />
-
-									<span className="sr-only">Administrar perfil</span>
-								</Button>
-							</DropdownMenuTrigger>
-
-							<DropdownMenuContent className="w-56">
-								<DropdownMenuLabel>{session.user.fullname}</DropdownMenuLabel>
-
-								<DropdownMenuSeparator />
-
-								<DropdownMenuGroup>
-									<DropdownMenuItem asChild>
-										<Link to="/support">
-											<LifeBuoy className="mr-2 h-4 w-4" />
-											<span>Soporte</span>
-										</Link>
-									</DropdownMenuItem>
-
-									<DropdownMenuItem onClick={() => logout()}>
-										<LogOut className="mr-2 h-4 w-4" />
-										<span>Cerrar sesión</span>
-									</DropdownMenuItem>
-								</DropdownMenuGroup>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					) : (
-						<div className="hidden space-x-2 md:block">
-							<Button variant="ghost" asChild>
-								<Link to="/login">Iniciar Sesión</Link>
-							</Button>
-
-							<Button asChild>
-								<Link to="/sign-up">Registrarse</Link>
-							</Button>
+						<div className="space-x-2">
 							{/* Este es el codigo del front end de notificaciones*/}
 							{/* TODO: Colocar el codigo dentro del navbar del usuario logeado*/}
 							<DropdownMenu>
@@ -133,19 +96,51 @@ export function NavBar() {
 								</DropdownMenuTrigger>
 
 								<DropdownMenuContent className="w-56">
+									<p className="items-center justify-center p-6 text-center text-sm text-muted-foreground">
+										No hay notificaciones
+									</p>
+								</DropdownMenuContent>
+							</DropdownMenu>
+
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="ghost" size="icon">
+										<User className="h-4 w-4" />
+
+										<span className="sr-only">Administrar perfil</span>
+									</Button>
+								</DropdownMenuTrigger>
+
+								<DropdownMenuContent className="w-56">
+									<DropdownMenuLabel>{session.user.fullname}</DropdownMenuLabel>
+
 									<DropdownMenuSeparator />
 
 									<DropdownMenuGroup>
-										{/*TODO: Agregar el recibimiento de notificaciones por parte del backend*/}
-										<DropdownMenuItem>
-											<span>Notificacion 1</span>
+										<DropdownMenuItem asChild>
+											<Link to="/support">
+												<LifeBuoy className="mr-2 h-4 w-4" />
+												<span>Soporte</span>
+											</Link>
 										</DropdownMenuItem>
-										<DropdownMenuItem>
-											<span>Notificacion 2</span>
+
+										<DropdownMenuItem onClick={() => logout()}>
+											<LogOut className="mr-2 h-4 w-4" />
+											<span>Cerrar sesión</span>
 										</DropdownMenuItem>
 									</DropdownMenuGroup>
 								</DropdownMenuContent>
 							</DropdownMenu>
+						</div>
+					) : (
+						<div className="hidden space-x-2 md:block">
+							<Button variant="ghost" asChild>
+								<Link to="/login">Iniciar Sesión</Link>
+							</Button>
+
+							<Button asChild>
+								<Link to="/sign-up">Registrarse</Link>
+							</Button>
 						</div>
 					)}
 
