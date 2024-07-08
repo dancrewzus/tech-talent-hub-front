@@ -1,25 +1,17 @@
 import { Main } from "@/components/main";
+import SectionHeader from "@/components/section-header";
 
-import { General } from "../components/general";
-import { Sidebar } from "../components/sidebar";
+import { ArticleForm } from "../components/article-form";
 
 export function CreateArticlePage() {
 	return (
-		<Main className="mx-auto w-full max-w-screen-xl space-y-8 pb-12 sm:px-6 sm:pt-12">
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "row",
-					justifyContent: "space-around",
-				}}
-			>
-				<div>
-					<Sidebar></Sidebar>
-				</div>
-				<div>
-					<General></General>
-				</div>
-			</div>
+		<Main className="container space-y-6 py-8">
+			<SectionHeader
+				title="Crear artículo"
+				description="Comparte tu conocimiento a la comunidad"
+			/>
+
+			<ArticleForm />
 		</Main>
 	);
 }
