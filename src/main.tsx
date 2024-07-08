@@ -11,6 +11,8 @@ import { ErrorPage } from "./features/error/error-page";
 import { LandingPage } from "./features/landing/landing-page";
 import { OffersPage } from "./features/offers/pages/offers-page";
 import { SupportPage } from "./features/support/pages/support-page";
+import { AboutMePage } from "./features/user/about-me-page";
+import { EditProfilePage } from "./features/user/edit-profile-page";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
 					{
 						path: "/support",
 						element: <SupportPage />,
+					},
+					{
+						path: "/profile",
+						element: <AboutMePage />,
+					},
+					{
+						path: "/edit-profile",
+						element: <EditProfilePage />,
 					},
 				],
 			},

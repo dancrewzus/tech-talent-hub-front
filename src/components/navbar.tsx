@@ -1,4 +1,4 @@
-import { LifeBuoy, LogOut, User } from "lucide-react";
+import { CircleUser, LifeBuoy, LogOut, User, Settings } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
 import { useSession } from "@/hooks/use-session";
@@ -87,6 +87,20 @@ export function NavBar() {
 								<DropdownMenuSeparator />
 
 								<DropdownMenuGroup>
+									<DropdownMenuItem asChild>
+										<Link to="/profile">
+											<CircleUser className="mr-2 h-4 w-4" />
+											<span>Ver perfil</span>
+										</Link>
+									</DropdownMenuItem>
+
+									<DropdownMenuItem asChild>
+										<Link to="/edit-profile">
+											<Settings className="mr-2 h-4 w-4" />
+											<span>Editar perfil</span>
+										</Link>
+									</DropdownMenuItem>
+
 									<DropdownMenuItem asChild>
 										<Link to="/support">
 											<LifeBuoy className="mr-2 h-4 w-4" />
