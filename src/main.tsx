@@ -4,8 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { BasePage } from "./components/base-page";
 import { Toaster } from "./components/ui/toaster";
-import { ArticlesCreate } from "./features/articles/pages/articles-create";
-import { ArticlesPage } from "./features/articles/pages/articles-page";
 import { ErrorPage } from "./features/error/error-page";
 import "./index.css";
 
@@ -108,7 +106,25 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "/articles",
-						element: <ArticlesPage />,
+						async lazy() {
+							const { ArticlesPage } = await import(
+								"./features/articles/pages/articles-page"
+							);
+
+							return { Component: ArticlesPage };
+						},
+					},
+					{
+						path: "/articles/create",
+						async lazy() {
+							const { CreateArticlePage } = await import(
+								"./features/articles/pages/create-article-page"
+							);
+
+							return {
+								Component: CreateArticlePage,
+							};
+						},
 					},
 					{
 						path: "/support",
@@ -123,10 +139,6 @@ const router = createBrowserRouter([
 						},
 					},
 				],
-			},
-			{
-				path: "/article-create",
-				element: <ArticlesCreate />,
 			},
 		],
 	},

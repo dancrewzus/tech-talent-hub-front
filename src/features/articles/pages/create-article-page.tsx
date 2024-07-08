@@ -1,9 +1,9 @@
 import { Main } from "@/components/main";
 
-import { General } from "./components/general";
-import { Sidebar } from "./components/sidebar";
+import { General } from "../components/general";
+import { Sidebar } from "../components/sidebar";
 
-export function ArticlesCreate() {
+export function CreateArticlePage() {
 	return (
 		<Main className="mx-auto w-full max-w-screen-xl space-y-8 pb-12 sm:px-6 sm:pt-12">
 			<div

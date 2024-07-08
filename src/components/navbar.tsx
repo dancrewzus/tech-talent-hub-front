@@ -33,6 +33,11 @@ const routes: Array<{
 		isProtected: true,
 	},
 	{
+		title: "Artículos",
+		to: "/articles",
+		isProtected: true,
+	},
+	{
 		title: "Inicio de Sesión",
 		to: "/login",
 		isProtected: false,
