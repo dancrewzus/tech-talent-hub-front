@@ -16,7 +16,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 
-import countriesJson from "@/data/countries.json";
+import { currencies } from "@/data/currencies";
 
 import { cn } from "@/lib/utils";
 
@@ -37,10 +37,6 @@ interface Props {
 	className?: string;
 	isOptional?: boolean;
 }
-
-const currencies = Array.from(
-	new Set(countriesJson.map((country) => country.currency)),
-);
 
 export function CurrencyDropdown({
 	id,

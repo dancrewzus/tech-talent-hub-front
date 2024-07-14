@@ -28,8 +28,6 @@ export const offersApi = {
 		const json = await response?.json();
 		const parsed = createApiResponseSchema(ManageOfferResponse).safeParse(json);
 
-		console.log(parsed.error?.message);
-
 		return parsed.success ? parsed.data : null;
 	},
 	/**
@@ -104,7 +102,6 @@ export const offersApi = {
 
 		const json = await response?.json();
 		const parsed = createApiResponseSchema(OffersResponse).safeParse(json);
-		console.log(parsed.error?.message);
 
 		if (!parsed.success || isErrorResponse(parsed.data)) return null;
 
