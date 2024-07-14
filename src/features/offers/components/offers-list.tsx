@@ -27,7 +27,7 @@ export function OffersList() {
 				<OffersSkeleton length={6} />
 			) : (
 				offers.map((offer) => (
-					<li key={offer.slug}>
+					<li key={offer.id}>
 						<OfferItem offer={offer} />
 					</li>
 				))

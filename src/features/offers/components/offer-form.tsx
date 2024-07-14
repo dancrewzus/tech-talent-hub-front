@@ -22,7 +22,13 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useCategories } from "@/hooks/use-categories";
 
-export function OfferForm({ offer }: { offer?: OfferType }) {
+export function OfferForm({
+	offer,
+	onSuccess,
+}: {
+	offer?: OfferType;
+	onSuccess?: (offer: OfferType) => void;
+}) {
 	const { categories } = useCategories();
 	const { toast } = useToast();
 
@@ -51,8 +57,8 @@ export function OfferForm({ offer }: { offer?: OfferType }) {
 	const onSubmit: SubmitHandler<CreateOfferType> = async (values) => {
 		const response = offer
 			? await offersApi.update({
+					id: offer.id,
 					...values,
-					slug: offer.slug,
 				})
 			: await offersApi.create(values);
 
@@ -70,6 +76,12 @@ export function OfferForm({ offer }: { offer?: OfferType }) {
 
 		toast({
 			title: offer ? "Oferta actualizada" : "Oferta publicada",
+		});
+
+		onSuccess?.({
+			applies: [],
+			id: offer?.id ?? "",
+			...response,
 		});
 	};
 

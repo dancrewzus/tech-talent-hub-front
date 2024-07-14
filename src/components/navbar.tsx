@@ -1,6 +1,8 @@
 import { LifeBuoy, LogOut, User, Bell } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 
+import type { SessionType } from "@/models/session";
+
 import { useSession } from "@/hooks/use-session";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +23,7 @@ const routes: Array<{
 	title: string;
 	to: string;
 	isProtected: boolean;
+	can?: (session: SessionType) => boolean;
 }> = [
 	{
 		title: "Ofertas",
@@ -31,6 +34,9 @@ const routes: Array<{
 		title: "Categorías",
 		to: "/categories",
 		isProtected: true,
+		can: (session: SessionType) => {
+			return session.user.role !== "client";
+		},
 	},
 	{
 		title: "Artículos",
@@ -67,9 +73,15 @@ export function NavBar() {
 				{session ? (
 					<ul className="hidden md:flex md:justify-center md:gap-4">
 						{routes
-							.filter((route) =>
-								session ? route.isProtected : !route.isProtected,
-							)
+							.filter((route) => {
+								if (session) {
+									return route.can
+										? route.isProtected && route.can(session)
+										: route.isProtected;
+								}
+
+								return !route.isProtected;
+							})
 							.map((route) => (
 								<li key={route.to}>
 									<NavLink

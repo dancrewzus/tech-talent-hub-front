@@ -1,5 +1,10 @@
 import { isErrorResponse } from "@/models/error-response";
-import { type CreateOfferType, Offer, OffersResponse } from "@/models/offer";
+import {
+	type CreateOfferType,
+	ManageOfferResponse,
+	type EditOfferType,
+	OffersResponse,
+} from "@/models/offer";
 import { type PaginationType } from "@/models/pagination";
 
 import { client } from "./client";
@@ -21,7 +26,9 @@ export const offersApi = {
 		});
 
 		const json = await response?.json();
-		const parsed = createApiResponseSchema(Offer).safeParse(json);
+		const parsed = createApiResponseSchema(ManageOfferResponse).safeParse(json);
+
+		console.log(parsed.error?.message);
 
 		return parsed.success ? parsed.data : null;
 	},
@@ -33,33 +40,50 @@ export const offersApi = {
 	 * @returns A promise that resolves to an offer if successful.
 	 * Otherwise an error response or null.
 	 */
-	async update({ slug, ...offer }: CreateOfferType) {
-		const response = await client(`v1/offers/${slug}`, {
+	async update({ id, ...offer }: EditOfferType) {
+		const response = await client(`v1/offers/${id}`, {
 			method: "PATCH",
 			body: offer,
 		});
 
 		const json = await response?.json();
-		const parsed = createApiResponseSchema(Offer).safeParse(json);
+		const parsed = createApiResponseSchema(ManageOfferResponse).safeParse(json);
 
 		return parsed.success ? parsed.data : null;
 	},
 	/**
 	 * Deletes the offer.
 	 *
-	 * @param offerSlug - The offer slug to delete.
+	 * @param id - The offer id to delete.
 	 *
 	 * @returns A promise that resolves with a boolean indicating the status.
 	 */
-	async delete(offerSlug: string) {
-		const response = await client(`v1/offers/${offerSlug}`, {
+	async delete(id: string) {
+		const response = await client(`v1/offers/${id}`, {
 			method: "DELETE",
 		});
 
-		const json = await response?.json();
-		const parsed = createApiResponseSchema(Offer).safeParse(json);
+		return response?.ok ?? false;
 
-		return parsed.success ? parsed.data : null;
+		// const json = await response?.json();
+		// const parsed = createApiResponseSchema(Offer).safeParse(json);
+
+		// return parsed.success ? parsed.data : null;
+	},
+	/**
+	 * Applies to the offer.
+	 *
+	 * @param id - The offer id to apply.
+	 *
+	 * @returns A promise that resolves with a boolean indicating the status.
+	 */
+	async apply(id: string) {
+		const response = await client(`v1/offers/apply/${id}`, {
+			method: "PATCH",
+			body: {},
+		});
+
+		return response?.ok ?? false;
 	},
 	/**
 	 * Returns the offers.
@@ -80,6 +104,7 @@ export const offersApi = {
 
 		const json = await response?.json();
 		const parsed = createApiResponseSchema(OffersResponse).safeParse(json);
+		console.log(parsed.error?.message);
 
 		if (!parsed.success || isErrorResponse(parsed.data)) return null;
 

@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 import { Main } from "@/components/main";
 import SectionHeader from "@/components/section-header";
 
 import { OfferForm } from "../components/offer-form";
 
 export function CreateOfferPage() {
+	const navigate = useNavigate();
+
 	return (
 		<Main className="container space-y-6 py-8">
 			<SectionHeader
@@ -11,7 +15,11 @@ export function CreateOfferPage() {
 				description="Crea una oferta para reclutar nuevos empleados"
 			/>
 
-			<OfferForm />
+			<OfferForm
+				onSuccess={() => {
+					return navigate("/offers");
+				}}
+			/>
 		</Main>
 	);
 }
